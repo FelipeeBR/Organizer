@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id          Int          @id @default(autoincrement())
+  name        String?
+  email       String       @unique
+  password    String
+  disciplinas Disciplina[]
+  agenda      Agenda[]
+  anotacao    Anotacao[]
+}
+
+model Disciplina {
+  id      Int      @id @default(autoincrement())
+  name    String
+  details String?
+  User    Usuario? @relation(fields: [userId], references: [id])
+  userId  Int?
+  tarefas Tarefa[]
+}
+
+model Tarefa {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String
+  date         DateTime
+  status       TaskStatus
+  Disciplina   Disciplina @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
+  disciplinaId Int
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+  IN_PROGRESS
+}
+
+model Agenda {
+  id          Int      @id @default(autoincrement())
+  description String
+  date        DateTime
+  User        Usuario  @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model Anotacao {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        DateTime @default(now())
+  User        Usuario  @relation(fields: [userId], references: [id])
+  userId      Int
+}

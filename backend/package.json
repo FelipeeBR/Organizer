@@ -1,0 +1,22 @@
+{
+  "name": "api-organizer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felipe Mendes",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.1.0",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "prisma": "^6.1.0"
+  }
+}
