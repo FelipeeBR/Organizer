@@ -3,11 +3,17 @@ import vectorLogin from '../../images/vector-login.png';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../features/userSlice';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const dispatch = useDispatch();
+    const { loading, error } = useSelector((state) => state.user);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -22,9 +28,15 @@ const Register = () => {
         setShowConfirmPassword(!showConfirmPassword);
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        const result = await dispatch(registerUser(data)); 
+        if(result.meta.requestStatus === "fulfilled") { 
+            navigate('/login'); 
+        } else {
+            console.error(result.message); 
+        }
     }
+
     return (
         <div classNameName=''>
             <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -108,17 +120,18 @@ const Register = () => {
                                                 </span>
                                             </div>
                                             
-                                            {errors.confirm?.type === "validate" && (
+                                            {errors.confirmPassword?.type === "validate" && (
                                                 <p className="text-red-600 text-sm">{errors.confirmPassword.message}</p>
                                             )}
 
-                                            <button
+                                            <button type="submit" disabled={loading}
                                                 className="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                                 <span className="ml-3">
-                                                    Criar Conta
+                                                    {loading ? 'Carregando...' : 'Criar Conta'}
                                                 </span>
                                             </button>
                                         </form>
+                                        {error && <p className="text-red-600 text-sm">{error.error || 'Ocorreu um erro ao cadastrar novo usuário'}</p>}
                                     </div>
                                 </div>
                             </div>

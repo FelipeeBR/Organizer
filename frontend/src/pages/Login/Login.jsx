@@ -3,10 +3,16 @@ import vectorLogin from '../../images/vector-login.png';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../features/authSlice';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
+    const { loading, error } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -17,8 +23,13 @@ const Login = () => {
         setShowPassword(!showPassword);
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        const result = await dispatch(loginUser(data)); 
+        if(result.meta.requestStatus === "fulfilled") {
+            navigate('/'); 
+        } else {
+            console.error(result.message); 
+        }
     }
      
     return (
@@ -86,13 +97,14 @@ const Login = () => {
                                             <p className="text-red-600 text-sm">Senha não pode ficar em branco</p>
                                         )}
                                         
-                                        <button
+                                        <button type="submit" disabled={loading}
                                             className="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                             <span className="ml-3">
-                                                Entrar
+                                                {loading ? 'Carregando...' : 'Entrar'}
                                             </span>
                                         </button>
                                     </form>
+                                    {error && <p className="text-red-600 text-sm">{error.error || 'Ocorreu um erro ao fazer login'}</p>}
                                 </div>
                                 <div className='flex items-center justify-center mt-3'>
                                     <span>Não possui uma conta? <Link to="/register" className='text-blue-500 underline'>Cadastre-se</Link></span>
