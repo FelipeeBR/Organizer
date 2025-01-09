@@ -2,10 +2,12 @@ const { PrismaClient } = require("@prisma/client");
 const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
+ 
+
 async function createDisciplina(title, content, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN); 
-        const userId = decoded.id; 
+        const userId = decoded.id;
         const data = await prisma.disciplina.create({
             data: {
                 name: title,
@@ -20,9 +22,15 @@ async function createDisciplina(title, content, token) {
     
 }
 
-async function getDisciplinas() {
+async function getDisciplinas(token) {
     try {
-        const disciplinas = await prisma.disciplina.findMany();
+        const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+        const userId = decoded.id;
+        const disciplinas = await prisma.disciplina.findMany({
+            where: {
+                userId: userId
+            }
+        });
         if(!disciplinas) {
             return null;
         }
@@ -32,7 +40,17 @@ async function getDisciplinas() {
     }
 }
 
+async function deleteDisciplina(id) {
+    const disciplina = await prisma.disciplina.delete({
+        where: {
+            id: id
+        }
+    });
+    return disciplina;
+}
+
 module.exports = {
     createDisciplina,
     getDisciplinas,
+    deleteDisciplina,
 };

@@ -6,7 +6,7 @@ import Title from '../../components/Title';
 const Home = () => {
   
   return (
-    <div className='bg-gray-200 h-full'>
+    <div className='bg-gray-200 h-full overflow-y-auto'>
         <div>
           <Title text="Início" />
           <Tasks/>

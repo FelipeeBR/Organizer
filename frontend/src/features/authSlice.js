@@ -14,19 +14,19 @@ const initialState = {
 };
   
 export const loginUser = createAsyncThunk(
-'auth/login',
-async (credentials, { rejectWithValue }) => {
-    try {
-    const response = await axios.post(API, credentials);
-    const userData = response.data;
+    'auth/login',
+    async (credentials, { rejectWithValue }) => {
+        try {
+        const response = await axios.post(API, credentials);
+        const userData = response.data;
 
-    localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("user", JSON.stringify(userData));
 
-    return userData;
-    } catch (error) {
-    return rejectWithValue(error.response.data || { error: 'Login failed' });
+        return userData;
+        } catch (error) {
+        return rejectWithValue(error.response.data || { error: 'Falha no login' });
+        }
     }
-}
 );
   
 export const logoutUser = createAsyncThunk('auth/logout', async () => {

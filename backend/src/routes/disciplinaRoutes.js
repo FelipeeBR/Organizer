@@ -1,5 +1,5 @@
 const express = require("express");
-const { getDisciplinas, createDisciplina} = require("../controllers/disciplinaController");
+const { getDisciplinas, createDisciplina, deleteDisciplina } = require("../controllers/disciplinaController");
 const { auth } = require("../middlewares/auth");
 
 
@@ -23,12 +23,23 @@ router.post("/disciplina", async (req, res) => {
 
 router.get("/disciplinas", auth, async (req, res) => {
     try {
-        const posts = await getDisciplinas(); 
+        const posts = await getDisciplinas(req.token); 
 
         if (posts.length === 0) {
             return res.status(404).json({ message: "Não possui disciplinas" });
         }
         return res.status(200).json(posts); 
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500); 
+    }
+});
+
+router.delete("/disciplina/:id", auth, async (req, res) => {
+    const { id } = req.params; 
+    try {
+        const post = await deleteDisciplina(id, req.token); 
+        res.status(200).json(post); 
     } catch (error) {
         console.error(error);
         res.sendStatus(500); 
