@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDisciplinas } from '../../features/disciplinaSlice';
 import CardDisciplina from './CardDisciplina';
 import { FaPlus } from "react-icons/fa";
@@ -8,26 +8,21 @@ import { useContextApp } from '../../context/AppContext';
 const Disciplinas = () => {
     const dispatch = useDispatch();
     const { openClose } = useContextApp();
-    const [disciplinas, setDisciplinas] = useState([]);
+    //const [disciplinas, setDisciplinas] = useState([]);
+    const disciplinas = useSelector((state) => state.disciplina.list);
     useEffect(() => {
-        const getAllDisciplinas = async () => {
-          const tokenData = JSON.parse(localStorage.getItem('user')); 
-          const token = tokenData?.token; 
+      const fetchDisciplinas = async () => {
+          const tokenData = JSON.parse(localStorage.getItem('user'));
+          const token = tokenData?.token;
           if (!token) {
-            console.error('Token não encontrado');
-            return;
+              console.error('Token não encontrado');
+              return;
           }
-          const result = await dispatch(getDisciplinas(token));
-          if (result.meta.requestStatus === 'fulfilled') {
-            setDisciplinas(result.payload);
-            console.log(result.payload);
-          } else {
-            console.error(result.payload || 'Erro ao buscar disciplinas');
-          }
-        };
-        getAllDisciplinas();
+          await dispatch(getDisciplinas(token));
+      };
+      fetchDisciplinas();
+    }, [dispatch]);
 
-      }, [dispatch]);
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 my-4">
             {disciplinas?.map((disciplina) => {

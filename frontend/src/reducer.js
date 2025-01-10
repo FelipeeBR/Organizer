@@ -1,8 +1,11 @@
 const reducer = (state, action) => {
     switch (action.type) {
       case 'CLOSE_OPEN':
-        const { element } = action.payload;
-        return { ...state, [element]: !state[element] };
+        return {
+          ...state,
+          [action.payload.element]: !state[action.payload.element],
+          ...(action.payload.id !== undefined && { editDisciplinaId: action.payload.id }),
+        };
       default:
         return state;
     }

@@ -22,6 +22,23 @@ async function createDisciplina(title, content, token) {
     
 }
 
+async function updateDisciplina(id, title, content) {
+    try {
+        const disciplina = await prisma.disciplina.update({
+            where: {
+                id: parseInt(id)
+            },
+            data: {
+                name: title,
+                details: content
+            }
+        });
+        return disciplina;
+    } catch (error) {
+        return error;
+    }
+}
+
 async function getDisciplinas(token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
@@ -40,17 +57,36 @@ async function getDisciplinas(token) {
     }
 }
 
+async function getDisciplina(id) {
+    try {
+        const disciplina = await prisma.disciplina.findUnique({
+            where: {
+                id: parseInt(id)
+            }
+        });
+        return disciplina;
+    } catch (error) {
+        return error;
+    }
+}
+
 async function deleteDisciplina(id) {
-    const disciplina = await prisma.disciplina.delete({
-        where: {
-            id: id
-        }
-    });
-    return disciplina;
+    try {
+        const disciplina = await prisma.disciplina.delete({
+            where: {
+                id: parseInt(id)
+            }
+        });
+        return disciplina;
+    } catch (error) {
+        return error;
+    }
 }
 
 module.exports = {
     createDisciplina,
     getDisciplinas,
     deleteDisciplina,
+    getDisciplina,
+    updateDisciplina,
 };

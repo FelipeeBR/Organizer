@@ -8,14 +8,16 @@ const AppContext = createContext();
 const initialState = {
     isSidebar: false,
     isModal: false,
-    isModalDisciplina: false
+    isModalDisciplina: false,
+    isModalDisciplinaEdit: false,
+    editDisciplinaId: null,
 };
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openClose = (element) => {
-    dispatch({ type: CLOSE_OPEN, payload: { element } });
+  const openClose = (element, id = null) => {
+    dispatch({ type: CLOSE_OPEN, payload: { element, id } });
   };
   return (
     <AppContext.Provider

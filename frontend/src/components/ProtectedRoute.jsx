@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
   }, [token]);
 
   if(isValid === null) {
-    return <div>Loading...</div>; 
+    return <div>Carregando...</div>; 
   }
   if(!isValid) {
     return <Navigate to="/login" />;
