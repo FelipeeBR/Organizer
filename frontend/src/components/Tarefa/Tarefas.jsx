@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDisciplinas } from '../../features/disciplinaSlice';
-import CardDisciplina from './CardDisciplina';
+import { getTarefas, resetarTarefas } from '../../features/tarefaSlice';
 import { FaPlus } from "react-icons/fa";
 import { useContextApp } from '../../context/AppContext';
+import CardTarefa from './CardTarefa';
+import { useParams } from 'react-router-dom';
 
-const Disciplinas = () => {
+const Tarefas = () => {
     const dispatch = useDispatch();
     const { openClose } = useContextApp();
-    const disciplinas = useSelector((state) => state.disciplina.list);
+    const { id } = useParams();
+    const tarefas = useSelector((state) => state.tarefa.list);
+  
     useEffect(() => {
       const fetchDisciplinas = async () => {
           const tokenData = JSON.parse(localStorage.getItem('user'));
@@ -17,18 +20,19 @@ const Disciplinas = () => {
               console.error('Token não encontrado');
               return;
           }
-          await dispatch(getDisciplinas(token));
+          await dispatch(getTarefas({ id: id, token: token }));
       };
       fetchDisciplinas();
     }, [dispatch]);
+    console.log(tarefas);
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 my-4">
-            {disciplinas?.map((disciplina) => {
-                return <CardDisciplina key={disciplina.id} info={disciplina} />;
+            {tarefas?.map((tarefa) => {
+                return <CardTarefa key={tarefa.id} info={tarefa} />;
             })}
         <div
-        onClick={() => openClose("isModalDisciplina")}
+        onClick={() => openClose("isModalTarefa")}
         className="cursor-pointer min-h-[200px] rounded-lg border relative flex items-center justify-center border-dashed border-slate-800 text-slate-800 bg-gray-200 hover:bg-gray-300 duration-300 p-4"
       >
         <button
@@ -43,4 +47,4 @@ const Disciplinas = () => {
     )
 }
 
-export default Disciplinas;
+export default Tarefas;

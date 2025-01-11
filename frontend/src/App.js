@@ -11,6 +11,8 @@ import Sidebar from "./components/Sidebar";
 import { FaBars } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import Disciplina from './pages/Disciplina/Disciplina';
+import Tarefa from './pages/Tarefa/Tarefa';
+import DisciplinaTarefa from './pages/Disciplina/DisciplinaTarefa';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -45,6 +47,7 @@ function App() {
             <Routes>
               <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/disciplinas" element={<ProtectedRoute><Disciplina /></ProtectedRoute>} />
+              <Route path="/disciplina/:id" element={<ProtectedRoute><DisciplinaTarefa /></ProtectedRoute>} />
             </Routes>
           </main>
         </div>

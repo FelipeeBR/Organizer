@@ -10,6 +10,8 @@ const initialState = {
     isModal: false,
     isModalDisciplina: false,
     isModalDisciplinaEdit: false,
+    isModalTarefa: false,
+    isModalTarefaEdit: false,
     editDisciplinaId: null,
 };
 

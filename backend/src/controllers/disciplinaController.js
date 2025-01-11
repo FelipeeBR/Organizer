@@ -2,8 +2,6 @@ const { PrismaClient } = require("@prisma/client");
 const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
- 
-
 async function createDisciplina(title, content, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN); 

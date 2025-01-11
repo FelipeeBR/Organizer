@@ -1,13 +1,12 @@
 import React from 'react';
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { FaBookOpen } from "react-icons/fa";
+import { FaTasks } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
 import { deleteDisciplina } from '../../features/disciplinaSlice';
 import { useContextApp } from "../../context/AppContext";
-import { Link } from 'react-router-dom';
 
-const CardDisciplina = ({info}) => {
-    const { id, name, details } = info;
+const CardTarefa = ({info}) => {
+    const { id, title, description, date, priority, status } = info;
     const dispatch = useDispatch();
     const { openClose } = useContextApp();
 
@@ -23,22 +22,21 @@ const CardDisciplina = ({info}) => {
     };
 
     const handleEditDisciplina = async (id) => {
-        openClose("isModalDisciplinaEdit", id);
+        openClose("isModalTarefaEdit", id);
     };
-
+    
     return (
         <div className=" bg-white rounded-lg flex flex-col justify-between border relative border-slate-500 p-4">
-            <Link to={"/disciplina/" + id}>
-                <div className="flex items-center justify-center text-blue-500 bg-blue-100 rounded-full w-16 h-16 sm:w-20 sm:h-20">
-                    <FaBookOpen className="text-2xl sm:text-3xl" />
-                </div>
-                <div className="flex flex-col flex-grow">
-                    <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                        {details}
-                    </p>
-                </div>
-            </Link>
+            
+            <div className="flex items-center justify-center text-blue-500 bg-blue-100 rounded-full w-16 h-16 sm:w-20 sm:h-20">
+                <FaTasks className="text-2xl sm:text-3xl" />
+            </div>
+            <div className="flex flex-col flex-grow">
+                <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+                <p className="text-sm text-gray-600 mt-1">
+                    {description}
+                </p>
+            </div>
             <div className="flex flex-col flex-grow">
                 <div className="mt-4 flex gap-2 sm:mt-auto">
                     <button onClick={() => handleEditDisciplina(id)} className="flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
@@ -56,4 +54,4 @@ const CardDisciplina = ({info}) => {
     )
 }
 
-export default CardDisciplina;
+export default CardTarefa;

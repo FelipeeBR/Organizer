@@ -21,6 +21,7 @@ model Usuario {
   disciplinas Disciplina[]
   agenda      Agenda[]
   anotacao    Anotacao[]
+  tarefa      Tarefa[]
 }
 
 model Disciplina {
@@ -38,14 +39,23 @@ model Tarefa {
   description  String
   date         DateTime
   status       TaskStatus
-  Disciplina   Disciplina @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
-  disciplinaId Int
+  priority     TaskPriority
+  disciplinaId Int?
+  Disciplina   Disciplina? @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
+  userId  Int?
+  User    Usuario? @relation(fields: [userId], references: [id])
 }
 
 enum TaskStatus {
   PENDING
   COMPLETED
   IN_PROGRESS
+}
+
+enum TaskPriority {
+  BAIXA
+  MEDIA
+  ALTA
 }
 
 model Agenda {

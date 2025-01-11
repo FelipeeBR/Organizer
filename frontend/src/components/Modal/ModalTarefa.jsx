@@ -1,17 +1,18 @@
 import { FaPlus, FaTimes } from "react-icons/fa";
-import { BiSolidBookAdd } from "react-icons/bi";
+import { RiTaskFill } from "react-icons/ri";
 import React, { useEffect, useState } from 'react';
 import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { registerDisciplina, getDisciplina, updateDisciplina } from "../../features/disciplinaSlice";
+import { createTarefa, updateTarefa, getTarefa } from "../../features/tarefaSlice";
+import { useParams } from 'react-router-dom';
 
 
-
-const ModalDisciplina = () => {
-  const { isModalDisciplina, isModalDisciplinaEdit, editDisciplinaId, openClose} = useContextApp();
-  const modalState = isModalDisciplina ? "isModalDisciplina" : isModalDisciplinaEdit ? "isModalDisciplinaEdit" : null;
+const ModalTarefa = () => {
+  const { isModalTarefa, isModalTarefaEdit, editDisciplinaId, openClose} = useContextApp();
+  const modalState = isModalTarefa ? "isModalTarefa" : isModalTarefaEdit ? "isModalTarefaEdit" : null;
   const dispatch = useDispatch();
+  const { id } = useParams();
   const { loading, error } = useSelector((state) => state.disciplina);
   const token = localStorage.getItem('user');
   const {
@@ -19,28 +20,30 @@ const ModalDisciplina = () => {
       handleSubmit,
       formState: { errors },
       setValue,
-      reset,
+      reset
   } = useForm({ defaultValues: {
       title: "",
-      content:"" 
+      description:"",
+      status: "PENDING", 
     },});
 
     
     const onSubmit = async (data) => {
       const parsedUser = JSON.parse(token);
       const token2 = parsedUser.token;
-      if (isModalDisciplina) {
-        const result = await dispatch(registerDisciplina({ ...data, token: token2 }));
+      data.disciplinaId = id;
+      if (isModalTarefa) {
+        const result = await dispatch(createTarefa({ tarefaData: data, token: token2 }));
         if (result.meta.requestStatus === "fulfilled") {
-          openClose("isModalDisciplina");
+          openClose("isModalTarefa");
           reset();
         } else {
           console.error(result.message);
         }
-      } else if (isModalDisciplinaEdit) {
-        const result = await dispatch(updateDisciplina({id: editDisciplinaId, disciplinaData: data, token: token2 })); 
+      } else if (isModalTarefaEdit) {
+        const result = await dispatch(updateTarefa({id: editDisciplinaId, disciplinaData: data, token: token2 })); 
         if (result.meta.requestStatus === "fulfilled") {
-          openClose("isModalDisciplinaEdit");
+          openClose("isModalTarefaEdit");
           reset({
             title: result.payload.name,
             content: result.payload.details,
@@ -55,9 +58,9 @@ const ModalDisciplina = () => {
       const fetchDisciplina = async () => {
         const parsedUser = JSON.parse(token);
         const token2 = parsedUser.token;
-          if (isModalDisciplinaEdit) {
+          if (isModalTarefaEdit) {
               try {
-                  const result = await dispatch(getDisciplina({id: editDisciplinaId, token: token2}));
+                  const result = await dispatch(getTarefa({id: editDisciplinaId, token: token2}));
                   const disciplina = result.payload;
                   setValue("title", disciplina?.name || "");
                   setValue("content", disciplina?.details || "");
@@ -68,7 +71,7 @@ const ModalDisciplina = () => {
       };
   
       fetchDisciplina();
-    }, [isModalDisciplinaEdit, editDisciplinaId, dispatch, token, setValue]);
+    }, [isModalTarefaEdit, editDisciplinaId, dispatch, token, setValue]);
 
     return (
       <div
@@ -76,10 +79,10 @@ const ModalDisciplina = () => {
           modalState ? "block opacity-100 z-10 show-modal" : "-z-10 opacity-0 hidden hide-modal"
         }`}
       >
-        {isModalDisciplina && (
+        {isModalTarefa && (
           <ModalContent
             title="Adicionar"
-            onClose={() => openClose("isModalDisciplina")}
+            onClose={() => openClose("isModalTarefa")}
             onSubmit={handleSubmit(onSubmit)}
             register={register}
             loading={loading}
@@ -87,10 +90,10 @@ const ModalDisciplina = () => {
             errors={errors}
           />
         )}
-        {isModalDisciplinaEdit && (
+        {isModalTarefaEdit && (
           <ModalContent
             title="Editar"
-            onClose={() => openClose("isModalDisciplinaEdit")}
+            onClose={() => openClose("isModalTarefaEdit")}
             onSubmit={handleSubmit(onSubmit)}
             register={register}
             loading={loading}
@@ -102,40 +105,67 @@ const ModalDisciplina = () => {
     );    
 }
 
-export default ModalDisciplina;
+export default ModalTarefa;
 
 
 const ModalContent = ({ title, onClose, onSubmit, register, loading, error, errors }) => (
   <div className="bg-white p-8 rounded-lg md:w-[700px] w-[300px] content">
     <div className="flex items-center justify-between">
-      <BiSolidBookAdd className="text-2xl text-slate-800" />
-      <h4 className="text-slate-800 text-xl">{title} disciplina</h4>
+      <RiTaskFill className="text-2xl text-slate-800" />
+      <h4 className="text-slate-800 text-xl">{title} tarefa</h4>
       <FaTimes className="text-2xl text-slate-800 cursor-pointer" onClick={onClose} />
     </div>
 
     <div className="my-5">
       <form onSubmit={onSubmit} className="flex flex-col gap-y-4">
         <div>
-          <label className="text-lg text-slate-800">Nome</label>
           <input
             type="text"
             name="title"
-            className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-200 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-            placeholder="Nome"
+            className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+            placeholder="Nome da tarefa"
             {...register("title", { required: true })}
           />
           {errors.name && <p className="text-red-500 text-sm">Preencha o nome</p>}
         </div>
         <div>
-          <label className="text-lg text-slate-800">Descrição</label>
           <textarea
             type="text"
-            name="content"
-            className="w-full px-8 py-4 rounded-lg font-medium bg-gray-200 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+            name="description"
+            className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             placeholder="Descrição"
-            {...register("content")}
-            
+            {...register("description")}
           ></textarea>
+        </div>
+        <div>
+          <label className="text-slate-800 text-md font-bold">Prioridade</label>
+          <select
+            name="priority"
+            {...register("priority")}
+            className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+          >
+            <option value="BAIXA">Baixa</option>
+            <option value="MEDIA">Média</option>
+            <option value="ALTA">Alta</option>
+          </select>
+        </div>
+        
+        <div>
+            <label className="text-slate-800 text-md font-bold">Status</label>
+            <select
+                name="status"
+                {...register("status")}
+                className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+            >
+                <option value="PENDING">Pendente</option>
+                <option value="IN_PROGRESS">Em andamento</option>
+                <option value="COMPLETED">Concluída</option>
+            </select>
+        </div>
+
+        <div>
+            <label className="text-slate-800 text-md font-bold">Data</label>
+            <input type="date" {...register("date")} className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"/>
         </div>
 
         <div className="flex items-center justify-end">
