@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createTarefa, updateTarefa, getTarefa } from "../../features/tarefaSlice";
 import { useParams } from 'react-router-dom';
 import { format, addDays } from "date-fns";
+import { toast } from "react-toastify";
 
 
 const ModalTarefa = () => {
@@ -40,16 +41,20 @@ const ModalTarefa = () => {
         if (result.meta.requestStatus === "fulfilled") {
           openClose("isModalTarefa");
           reset();
+          toast.success('Tarefa criada com sucesso');
         } else {
           console.error(result.message);
+          toast.error('Erro ao criar tarefa');
         }
       } else if (isModalTarefaEdit) {
         const result = await dispatch(updateTarefa({id: editTarefaId, tarefaData: data, token: token2 })); 
         if (result.meta.requestStatus === "fulfilled") {
           openClose("isModalTarefaEdit");
           reset();
+          toast.success('Tarefa atualizada com sucesso');
         } else {
           console.error(result.message);
+          toast.error('Erro ao atualizar tarefa');
         }
       }
     };
@@ -67,7 +72,6 @@ const ModalTarefa = () => {
                   setValue("status", tarefa?.status || "");
                   setValue("priority", tarefa?.priority || "");
                   setValue("date", tarefa?.date ? format(addDays(new Date(tarefa.date), 1), 'yyyy-MM-dd') : "");
-                  console.log(tarefa);
               } catch (error) {
                   console.error("Erro ao buscar tarefa:", error);
               }

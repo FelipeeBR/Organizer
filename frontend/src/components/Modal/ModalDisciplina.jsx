@@ -5,7 +5,7 @@ import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { registerDisciplina, getDisciplina, updateDisciplina } from "../../features/disciplinaSlice";
-
+import { toast } from "react-toastify";
 
 
 const ModalDisciplina = () => {
@@ -34,8 +34,10 @@ const ModalDisciplina = () => {
         if (result.meta.requestStatus === "fulfilled") {
           openClose("isModalDisciplina");
           reset();
+          toast.success('Disciplina criada com sucesso');
         } else {
           console.error(result.message);
+          toast.error('Erro ao criar disciplina');
         }
       } else if (isModalDisciplinaEdit) {
         const result = await dispatch(updateDisciplina({id: editDisciplinaId, disciplinaData: data, token: token2 })); 
@@ -45,8 +47,10 @@ const ModalDisciplina = () => {
             title: result.payload.name,
             content: result.payload.details,
           });
+          toast.success('Disciplina atualizada com sucesso');
         } else {
           console.error(result.message);
+          toast.error('Erro ao atualizar disciplina');
         }
       }
     };

@@ -11,7 +11,6 @@ const Tarefas = () => {
     const { openClose } = useContextApp();
     const { id } = useParams();
     const tarefas = useSelector((state) => state.tarefa.list);
-    console.log(tarefas);
     const [listTarefas, setListTarefas] = useState([]);
   
     useEffect(() => {

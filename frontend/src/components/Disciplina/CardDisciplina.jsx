@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteDisciplina } from '../../features/disciplinaSlice';
 import { useContextApp } from "../../context/AppContext";
 import { Link } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 const CardDisciplina = ({info}) => {
     const { id, name, details } = info;
@@ -16,9 +17,9 @@ const CardDisciplina = ({info}) => {
         const res = await dispatch(deleteDisciplina({ id, token }));
     
         if (res.meta.requestStatus === 'fulfilled') {
-            console.log('Disciplina excluída com sucesso');
+            toast.success('Disciplina excluída com sucesso');
         } else {
-            console.error(res.payload || 'Erro ao deletar disciplina');
+            toast.error(res.payload || 'Erro ao deletar disciplina');
         }
     };
 

@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import Disciplina from './pages/Disciplina/Disciplina';
 import Tarefa from './pages/Tarefa/Tarefa';
 import DisciplinaTarefa from './pages/Disciplina/DisciplinaTarefa';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -50,6 +51,7 @@ function App() {
               <Route path="/disciplina/:id" element={<ProtectedRoute><DisciplinaTarefa /></ProtectedRoute>} />
             </Routes>
           </main>
+          <ToastContainer position="top-center"/>
         </div>
       ) : (
         <Routes>

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { deleteTarefa } from '../../features/tarefaSlice';
 import { useContextApp } from "../../context/AppContext";
 import { format, addDays } from 'date-fns';
+import { toast } from "react-toastify";
 
 const CardTarefa = ({info}) => {
     const { id, title, description, date, priority, status } = info;
@@ -17,9 +18,9 @@ const CardTarefa = ({info}) => {
         const res = await dispatch(deleteTarefa({ id, token }));
     
         if(res.meta.requestStatus === 'fulfilled') {
-            console.log('Tarefa excluída com sucesso');
+            toast.success('Tarefa foi excluída');
         } else {
-            console.error(res.payload || 'Erro ao deletar Tarefa');
+            toast.error(res.payload || 'Erro ao deletar Tarefa');
         }
     };
 
