@@ -27,7 +27,7 @@ const CardDisciplina = ({info}) => {
     };
 
     return (
-        <div className=" bg-white rounded-lg flex flex-col justify-between border relative border-slate-500 p-4">
+        <div className="bg-white rounded-lg shadow-md flex flex-col justify-between relative p-4">
             <Link to={"/disciplina/" + id}>
                 <div className="flex items-center justify-center text-blue-500 bg-blue-100 rounded-full w-16 h-16 sm:w-20 sm:h-20">
                     <FaBookOpen className="text-2xl sm:text-3xl" />
@@ -42,12 +42,10 @@ const CardDisciplina = ({info}) => {
             <div className="flex flex-col flex-grow">
                 <div className="mt-4 flex gap-2 sm:mt-auto">
                     <button onClick={() => handleEditDisciplina(id)} className="flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
-                        <FaEdit className="mr-2" />
-                        Editar
+                        <FaEdit className="" />
                     </button>
                     <button onClick={() => handleDeleteDisciplina(id)} className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                        <FaTrash className="mr-2" />
-                        Excluir
+                        <FaTrash className="" />
                     </button>
                 </div>
             </div>

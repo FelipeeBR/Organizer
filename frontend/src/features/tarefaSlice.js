@@ -80,6 +80,25 @@ export const getTarefas = createAsyncThunk(
     }
 );
 
+export const deleteTarefa = createAsyncThunk(
+    'tarefa/delete',
+    async ({ id, token }, { rejectWithValue }) => {
+        try {
+            const response = await axios.delete(`${API}/tarefa/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            if(error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            }
+            return rejectWithValue({ error: 'Erro desconhecido. Tente novamente.' });
+        }
+    }
+)
+
 const tarefaSlice = createSlice({
     name: 'tarefa',
     initialState: {
@@ -88,14 +107,7 @@ const tarefaSlice = createSlice({
         loading: false,
         error: null,
     },
-    reducers: {
-        atualizarTarefas: (state, action) => {
-            state.list = action.payload;
-        },
-        resetarTarefas: (state) => {
-            state.list = []; 
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(createTarefa.pending, (state) => {
@@ -117,6 +129,14 @@ const tarefaSlice = createSlice({
             .addCase(updateTarefa.fulfilled, (state, action) => {
                 state.loading = false;
                 state.tarefa = action.payload;
+                const updatedTarefa = action.payload;
+                const index = state.list.findIndex(tarefa => tarefa.id === updatedTarefa.id);
+                if (index !== -1) {
+                    state.list[index] = updatedTarefa;
+                } else {
+                    state.list.push(updatedTarefa);
+                }
+                state.tarefa = updatedTarefa;
             })
             .addCase(updateTarefa.rejected, (state, action) => {
                 state.loading = false;
@@ -146,9 +166,24 @@ const tarefaSlice = createSlice({
             .addCase(getTarefas.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
+                state.list = [];
+            })
+            .addCase(deleteTarefa.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteTarefa.fulfilled, (state, action) => {
+                state.loading = false;
+                state.tarefa = action.payload;
+                state.list = state.list.filter(
+                    (tarefa) => tarefa.id !== action.payload.id
+                );
+            })
+            .addCase(deleteTarefa.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error;
             });
     },
 });
 
-export const { atualizarTarefas, resetarTarefas } = tarefaSlice.actions;
 export default tarefaSlice.reducer;

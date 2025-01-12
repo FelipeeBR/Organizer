@@ -13,6 +13,7 @@ const initialState = {
     isModalTarefa: false,
     isModalTarefaEdit: false,
     editDisciplinaId: null,
+    editTarefaId: null,
 };
 
 const AppProvider = ({ children }) => {

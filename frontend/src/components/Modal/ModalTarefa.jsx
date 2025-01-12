@@ -6,14 +6,15 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTarefa, updateTarefa, getTarefa } from "../../features/tarefaSlice";
 import { useParams } from 'react-router-dom';
+import { format, addDays } from "date-fns";
 
 
 const ModalTarefa = () => {
-  const { isModalTarefa, isModalTarefaEdit, editDisciplinaId, openClose} = useContextApp();
+  const { isModalTarefa, isModalTarefaEdit, editTarefaId, openClose} = useContextApp();
   const modalState = isModalTarefa ? "isModalTarefa" : isModalTarefaEdit ? "isModalTarefaEdit" : null;
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, error } = useSelector((state) => state.disciplina);
+  const { loading, error } = useSelector((state) => state.tarefa);
   const token = localStorage.getItem('user');
   const {
       register,
@@ -25,6 +26,8 @@ const ModalTarefa = () => {
       title: "",
       description:"",
       status: "PENDING", 
+      priority: "BAIXA",
+      date: format(new Date(), 'yyyy-MM-dd')
     },});
 
     
@@ -41,13 +44,10 @@ const ModalTarefa = () => {
           console.error(result.message);
         }
       } else if (isModalTarefaEdit) {
-        const result = await dispatch(updateTarefa({id: editDisciplinaId, disciplinaData: data, token: token2 })); 
+        const result = await dispatch(updateTarefa({id: editTarefaId, tarefaData: data, token: token2 })); 
         if (result.meta.requestStatus === "fulfilled") {
           openClose("isModalTarefaEdit");
-          reset({
-            title: result.payload.name,
-            content: result.payload.details,
-          });
+          reset();
         } else {
           console.error(result.message);
         }
@@ -60,18 +60,22 @@ const ModalTarefa = () => {
         const token2 = parsedUser.token;
           if (isModalTarefaEdit) {
               try {
-                  const result = await dispatch(getTarefa({id: editDisciplinaId, token: token2}));
-                  const disciplina = result.payload;
-                  setValue("title", disciplina?.name || "");
-                  setValue("content", disciplina?.details || "");
+                  const result = await dispatch(getTarefa({id: editTarefaId, token: token2}));
+                  const tarefa = result.payload;
+                  setValue("title", tarefa?.title || "");
+                  setValue("description", tarefa?.description || "");
+                  setValue("status", tarefa?.status || "");
+                  setValue("priority", tarefa?.priority || "");
+                  setValue("date", tarefa?.date ? format(addDays(new Date(tarefa.date), 1), 'yyyy-MM-dd') : "");
+                  console.log(tarefa);
               } catch (error) {
-                  console.error("Erro ao buscar disciplina:", error);
+                  console.error("Erro ao buscar tarefa:", error);
               }
           }
       };
   
       fetchDisciplina();
-    }, [isModalTarefaEdit, editDisciplinaId, dispatch, token, setValue]);
+    }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue]);
 
     return (
       <div
@@ -158,7 +162,7 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
                 className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
             >
                 <option value="PENDING">Pendente</option>
-                <option value="IN_PROGRESS">Em andamento</option>
+                <option value="IN_PROGRESS">Fazendo</option>
                 <option value="COMPLETED">Concluída</option>
             </select>
         </div>

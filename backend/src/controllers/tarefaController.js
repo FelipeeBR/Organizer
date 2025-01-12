@@ -68,7 +68,7 @@ async function deleteTarefa(id) {
     }
 }
 
-async function updateTarefa(id, title, description, date, status) {
+async function updateTarefa(id, title, description, date, status, priority) {
     try {
         const tarefa = await prisma.tarefa.update({
             where: {
@@ -77,8 +77,9 @@ async function updateTarefa(id, title, description, date, status) {
             data: {
                 title: title,
                 description: description,
-                date: date,
-                status: status
+                date: new Date(date),
+                status: status,
+                priority: priority
             }
         });
         return tarefa;

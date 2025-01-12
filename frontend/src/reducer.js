@@ -5,6 +5,7 @@ const reducer = (state, action) => {
           ...state,
           [action.payload.element]: !state[action.payload.element],
           ...(action.payload.id !== undefined && { editDisciplinaId: action.payload.id }),
+          ...(action.payload.id !== undefined && { editTarefaId: action.payload.id }),
         };
       default:
         return state;

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTarefas, resetarTarefas } from '../../features/tarefaSlice';
+import { getTarefas } from '../../features/tarefaSlice';
 import { FaPlus } from "react-icons/fa";
 import { useContextApp } from '../../context/AppContext';
 import CardTarefa from './CardTarefa';
@@ -11,6 +11,8 @@ const Tarefas = () => {
     const { openClose } = useContextApp();
     const { id } = useParams();
     const tarefas = useSelector((state) => state.tarefa.list);
+    console.log(tarefas);
+    const [listTarefas, setListTarefas] = useState([]);
   
     useEffect(() => {
       const fetchDisciplinas = async () => {
@@ -20,11 +22,16 @@ const Tarefas = () => {
               console.error('Token não encontrado');
               return;
           }
-          await dispatch(getTarefas({ id: id, token: token }));
+
+          const res = await dispatch(getTarefas({ id: id, token: token }));
+          if(res.meta.requestStatus === 'fulfilled') {
+            setListTarefas(res.payload);
+          }else{
+            console.error(res.payload || 'Erro ao buscar disciplinas');
+          }
       };
       fetchDisciplinas();
-    }, [dispatch]);
-    console.log(tarefas);
+    }, [dispatch, id]);
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4 my-4">

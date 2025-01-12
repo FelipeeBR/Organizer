@@ -43,9 +43,9 @@ router.get("/tarefa/:id", auth, async (req, res) => {
 
 router.put("/tarefa/:id", auth, async (req, res) => {    
     const { id } = req.params; 
-    const { title, description, date, status } = req.body;
+    const { title, description, date, status, priority } = req.body;
     try {
-        const post = await updateTarefa(id, title, description, date, status, req.token); 
+        const post = await updateTarefa(id, title, description, date, status, priority, req.token); 
         res.status(200).json(post); 
     } catch (error) {
         console.error(error);
