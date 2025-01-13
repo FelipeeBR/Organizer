@@ -88,10 +88,27 @@ async function updateTarefa(id, title, description, date, status, priority) {
     }
 }
 
+async function getAllTarefas(token) {
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+        const userId = decoded.id;
+        const tarefas = await prisma.tarefa.findMany({
+            where: {
+                userId: userId
+            }
+        });
+        return tarefas;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
 module.exports = {
     createTarefa,
     getTarefas, 
     getTarefa,
     deleteTarefa,
-    updateTarefa
+    updateTarefa,
+    getAllTarefas,
 };

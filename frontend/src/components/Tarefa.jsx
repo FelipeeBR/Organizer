@@ -3,7 +3,7 @@ import { Draggable } from "@hello-pangea/dnd";
 
 const Tarefa = ({ task, index }) => {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task.id.toString()} index={index}>
       {(provided) => (
         <div
         {...provided.draggableProps}
@@ -11,7 +11,7 @@ const Tarefa = ({ task, index }) => {
         ref={provided.innerRef}
         className="w-full bg-zinc-300 mb-2 last:mb-0 px-2 py-3 rounded border-[2px] border-zinc-400"
       >
-        <p className="font-medium">{task.name}</p>
+        <p className="font-medium">{task.title}</p>
       </div>
       )}
     </Draggable>

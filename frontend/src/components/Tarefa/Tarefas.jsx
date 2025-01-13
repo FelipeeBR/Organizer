@@ -14,7 +14,7 @@ const Tarefas = () => {
     const [listTarefas, setListTarefas] = useState([]);
   
     useEffect(() => {
-      const fetchDisciplinas = async () => {
+      const fetchTarefas = async () => {
           const tokenData = JSON.parse(localStorage.getItem('user'));
           const token = tokenData?.token;
           if (!token) {
@@ -26,10 +26,10 @@ const Tarefas = () => {
           if(res.meta.requestStatus === 'fulfilled') {
             setListTarefas(res.payload);
           }else{
-            console.error(res.payload || 'Erro ao buscar disciplinas');
+            console.error(res.payload || 'Erro ao buscar tarefas');
           }
       };
-      fetchDisciplinas();
+      fetchTarefas();
     }, [dispatch, id]);
 
     return (

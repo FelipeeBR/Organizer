@@ -97,7 +97,26 @@ export const deleteTarefa = createAsyncThunk(
             return rejectWithValue({ error: 'Erro desconhecido. Tente novamente.' });
         }
     }
-)
+);
+
+export const getAllTarefas = createAsyncThunk(
+    'tarefa/getAllUser',
+    async (token, { rejectWithValue }) => { 
+        try {
+            const response = await axios.get(`${API}/tarefasUser`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            if(error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            }
+            return rejectWithValue({ error: 'Erro desconhecido. Tente novamente.' });
+        }
+    }
+);
 
 const tarefaSlice = createSlice({
     name: 'tarefa',
@@ -182,6 +201,20 @@ const tarefaSlice = createSlice({
             .addCase(deleteTarefa.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload.error;
+            })
+            .addCase(getAllTarefas.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getAllTarefas.fulfilled, (state, action) => {
+                state.loading = false;
+                state.tarefa = action.payload;
+                state.list = action.payload;
+            })
+            .addCase(getAllTarefas.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.error;
+                state.list = [];
             });
     },
 });

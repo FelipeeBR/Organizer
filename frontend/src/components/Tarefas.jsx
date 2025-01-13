@@ -1,96 +1,90 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import Tarefa from './Tarefa';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTarefas, updateTarefa } from '../features/tarefaSlice';
 
 const Tarefas = () => {
+    const dispatch = useDispatch();
     const [newTask, setNewTask] = useState("");
-    const [tasks, setTasks] = useState([
-        { id: "0", name: "Estudar React", status: 1 },
-        { id: "1", name: "Status da Task", status: 2 },
-        { id: "2", name: "Terminar Sistema", status: 3 },
-    ]);
+    //const tarefas = useSelector((state) => state.tarefa.list);
+    const [listTarefas, setListTarefas] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
-    const column1Tasks = tasks.filter((task) => task.status === 1);
-    const column2Tasks = tasks.filter((task) => task.status === 2);
-    const column3Tasks = tasks.filter((task) => task.status === 3);
+    const column1Tasks = listTarefas.filter((task) => task.status === "PENDING");
+    const column2Tasks = listTarefas.filter((task) => task.status === "IN_PROGRESS");
+    const column3Tasks = listTarefas.filter((task) => task.status === "COMPLETED");
 
-    function handleAddTask(event) {
-        event.preventDefault();
-    
-        if (newTask === "") return;
-    
-        const newItem = {
-          id: `${tasks.length + 1}`,
-          name: newTask,
-          status: 1,
-        };
-    
-        setTasks((prevTasks) => [...prevTasks, newItem]);
-        setNewTask("");
-      }
+    useEffect(() => {
+        const fetchTarefas = async () => {
+            const tokenData = JSON.parse(localStorage.getItem('user'));
+            const token = tokenData?.token;
+            if (!token) {
+                console.error('Token não encontrado');
+                return;
+            }
+            const res = await dispatch(getAllTarefas(token));
+            if(res.meta.requestStatus === 'fulfilled') {
+                setListTarefas(res.payload);
+            }else{
+                console.error(res.payload || 'Erro ao buscar tarefas');
+            }
+        }
+        fetchTarefas();
+    }, [dispatch]);
 
-    function reorder(list, startIndex, endIndex) {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
-        return result;
-    }
+    const updateTarefaStatus = async (id, status) => {
+        const tarefa = { ...listTarefas.find((task) => task.id === id), status };
+        const tokenData = JSON.parse(localStorage.getItem('user'));
+        const token = tokenData?.token;
+        if (!token) {
+            console.error('Token não encontrado');
+            return;
+        }
+        try {
+            const res = await dispatch(updateTarefa({ id: id, tarefaData: tarefa, token: token }));
     
-    function onDragEnd(result) {
+            if (res.meta.requestStatus === 'fulfilled') {
+                setListTarefas(res.payload);
+            } else {
+                console.error(res.payload || 'Erro ao atualizar a tarefa');
+            }
+        } catch (error) {
+            console.error('Erro inesperado ao atualizar a tarefa:', error);
+        }
+    };
+    
+    
+    async function onDragEnd(result) {
         if (!result.destination) return;
     
         const { source, destination } = result;
-
-        const getColumnTasks = (columnId) => {
-            switch (columnId) {
-              case "column1":
-                return column1Tasks;
-              case "column2":
-                return column2Tasks;
-              case "column3":
-                return column3Tasks;
-              default:
-                return [];
-            }
-        };
     
-        if(source.droppableId === destination.droppableId) {
-            const tasksToReorder = getColumnTasks(source.droppableId);
-        
-            const reordered = reorder(tasksToReorder, source.index, destination.index);
-        
-            const updatedTasks = tasks.map((task) => {
-              const reorderedTask = reordered.find((t) => t.id === task.id);
-              if (reorderedTask) {
-                return reorderedTask;
-              }
-              return task;
-            });
-        
-            setTasks(updatedTasks);
-        } else {
-            const movedTask = tasks.find((task) => task.id === result.draggableId);
-        
-            if (movedTask) {
-              const updatedTasks = tasks.map((task) => {
-                if (task.id === movedTask.id) {
-                  let newStatus = 0;
-                  if (destination.droppableId === "column1") newStatus = 1;
-                  else if (destination.droppableId === "column2") newStatus = 2;
-                  else if (destination.droppableId === "column3") newStatus = 3;
-        
-                  return {
-                    ...task,
-                    status: newStatus,
-                  };
-                }
-                return task;
-              });
-        
-              setTasks(updatedTasks);
+        // Verificar se o item mudou de coluna
+        if (source.droppableId !== destination.droppableId) {
+            // Obter a tarefa movida pelo ID
+            const movedTask = listTarefas.find((task) => task.id.toString() === result.draggableId);
+    
+            if(movedTask) {
+                // Determinar o novo status com base na coluna de destino
+                let newStatus = "";
+                if (destination.droppableId === "column1") newStatus = "PENDING";
+                else if (destination.droppableId === "column2") newStatus = "IN_PROGRESS";
+                else if (destination.droppableId === "column3") newStatus = "COMPLETED";
+    
+                await updateTarefaStatus(movedTask.id, newStatus);
+
+                // Atualizar o estado localmente para refletir a mudança
+                const updatedTasks = listTarefas.map((task) =>
+                    task.id === movedTask.id
+                        ? { ...task, status: newStatus }
+                        : task
+                );
+                setListTarefas(updatedTasks);
             }
         }
     }
+    
 
     return (
         <div className="w-full h-screen flex flex-col items-center px-4 pt-52">
@@ -133,7 +127,7 @@ const Tarefas = () => {
                         >
                             {column2Tasks.length > 0 ? (
                             column2Tasks.map((task, index) => (
-                                <Tarefa key={task.id} task={task} index={index} />
+                                <Tarefa key={task.id.toString()} task={task} index={index} />
                             ))
                             ) : (
                             <div className="text-center text-gray-500 italic">
