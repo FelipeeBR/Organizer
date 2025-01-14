@@ -14,126 +14,130 @@ import { toast } from "react-toastify";
 const ModalTarefa = () => {
   const { isModalTarefa, isModalTarefaEdit, editTarefaId, openClose} = useContextApp();
   const modalState = isModalTarefa ? "isModalTarefa" : isModalTarefaEdit ? "isModalTarefaEdit" : null;
+
   const [disciplinas, setDisciplinas] = useState([]);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { loading, error } = useSelector((state) => state.tarefa);
   const token = localStorage.getItem('user');
   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-      setValue,
-      reset
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset
   } = useForm({ defaultValues: {
-      title: "",
-      description:"",
-      status: "PENDING", 
-      priority: "BAIXA",
-      disciplinaId: id || null,
-      date: format(new Date(), 'yyyy-MM-dd')
-    },});
+    title: "",
+    description:"",
+    status: "PENDING", 
+    priority: "BAIXA",
+    disciplinaId: id || null,
+    date: format(new Date(), 'yyyy-MM-dd')
+  },});
+  
 
-    
-    const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
+    const parsedUser = JSON.parse(token);
+    const token2 = parsedUser.token;
+    //data.disciplinaId = id;
+    if(isModalTarefa) {
+      const result = await dispatch(createTarefa({ tarefaData: data, token: token2 }));
+      if(result.meta.requestStatus === "fulfilled") {
+        reset({});
+        openClose("isModalTarefa");
+        toast.success('Tarefa criada com sucesso');
+      } else {
+        console.error(result.message);
+        toast.error('Erro ao criar tarefa');
+      }
+    } else if(isModalTarefaEdit) {
+      const result = await dispatch(updateTarefa({id: editTarefaId, tarefaData: data, token: token2 })); 
+      if(result.meta.requestStatus === "fulfilled") {
+        openClose("isModalTarefaEdit");
+        reset({});
+        toast.success('Tarefa atualizada com sucesso');
+      } else {
+        console.error(result.message);
+        toast.error('Erro ao atualizar tarefa');
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchDisciplina = async () => {
       const parsedUser = JSON.parse(token);
       const token2 = parsedUser.token;
-      //data.disciplinaId = id;
-      if (isModalTarefa) {
-        const result = await dispatch(createTarefa({ tarefaData: data, token: token2 }));
-        if (result.meta.requestStatus === "fulfilled") {
-          openClose("isModalTarefa");
-          reset();
-          toast.success('Tarefa criada com sucesso');
-        } else {
-          console.error(result.message);
-          toast.error('Erro ao criar tarefa');
+        if(isModalTarefaEdit) {
+            try {
+                const result = await dispatch(getTarefa({id: editTarefaId, token: token2}));
+                const tarefa = result.payload;
+                setValue("title", tarefa?.title || "");
+                setValue("description", tarefa?.description || "");
+                setValue("status", tarefa?.status || "");
+                setValue("priority", tarefa?.priority || "");
+                setValue("date", tarefa?.date ? format(addDays(new Date(tarefa.date), 1), 'yyyy-MM-dd') : "");
+            } catch (error) {
+                console.error("Erro ao buscar tarefa:", error);
+            }
+        }else {
+          reset({});
         }
-      } else if (isModalTarefaEdit) {
-        const result = await dispatch(updateTarefa({id: editTarefaId, tarefaData: data, token: token2 })); 
-        if (result.meta.requestStatus === "fulfilled") {
-          openClose("isModalTarefaEdit");
-          reset();
-          toast.success('Tarefa atualizada com sucesso');
-        } else {
-          console.error(result.message);
-          toast.error('Erro ao atualizar tarefa');
-        }
-      }
     };
 
-    useEffect(() => {
-      const fetchDisciplina = async () => {
-        const parsedUser = JSON.parse(token);
-        const token2 = parsedUser.token;
-          if (isModalTarefaEdit) {
-              try {
-                  const result = await dispatch(getTarefa({id: editTarefaId, token: token2}));
-                  const tarefa = result.payload;
-                  setValue("title", tarefa?.title || "");
-                  setValue("description", tarefa?.description || "");
-                  setValue("status", tarefa?.status || "");
-                  setValue("priority", tarefa?.priority || "");
-                  setValue("date", tarefa?.date ? format(addDays(new Date(tarefa.date), 1), 'yyyy-MM-dd') : "");
-              } catch (error) {
-                  console.error("Erro ao buscar tarefa:", error);
-              }
-          }
-      };
-  
-      fetchDisciplina();
-    }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue]);
+    fetchDisciplina();
+  }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue]);
 
-    useEffect(() => {
-      const fetchDisciplinas = async () => {
-          const tokenData = JSON.parse(localStorage.getItem('user'));
-          const token = tokenData?.token;
-          if (!token) {
-              console.error('Token não encontrado');
-              return;
-          }
-          const res = await dispatch(getDisciplinas(token));
-          if(res.meta.requestStatus === 'fulfilled') {
-            setDisciplinas(res.payload);
-          }else{
-            console.error(res.payload || 'Erro ao buscar disciplinas');
-          }
-      };
-      fetchDisciplinas();
-    }, [dispatch]);
-    console.log(disciplinas);
-    return (
-      <div
-        className={`bg-[rgba(0,0,0,0.5)] min-h-screen w-full flex items-center justify-center fixed top-0 left-0 ${
-          modalState ? "block opacity-100 z-10 show-modal" : "-z-10 opacity-0 hidden hide-modal"
-        }`}
-      >
-        {isModalTarefa && (
-          <ModalContent
-            title="Adicionar"
-            onClose={() => openClose("isModalTarefa")}
-            onSubmit={handleSubmit(onSubmit)}
-            register={register}
-            loading={loading}
-            error={error}
-            errors={errors}
-            disciplinas={disciplinas}
-          />
-        )}
-        {isModalTarefaEdit && (
-          <ModalContent
-            title="Editar"
-            onClose={() => openClose("isModalTarefaEdit")}
-            onSubmit={handleSubmit(onSubmit)}
-            register={register}
-            loading={loading}
-            error={error}
-            errors={errors}
-            disciplinas={disciplinas}
-          />
-        )}
-      </div>
-    );    
+  useEffect(() => {
+    const fetchDisciplinas = async () => {
+        const tokenData = JSON.parse(localStorage.getItem('user'));
+        const token = tokenData?.token;
+        if (!token) {
+            console.error('Token não encontrado');
+            return;
+        }
+        const res = await dispatch(getDisciplinas(token));
+        if(res.meta.requestStatus === 'fulfilled') {
+          setDisciplinas(res.payload);
+        }else{
+          console.error(res.payload || 'Erro ao buscar disciplinas');
+        }
+    };
+    fetchDisciplinas();
+  }, [dispatch]);
+
+
+  return (
+    <div
+      className={`bg-[rgba(0,0,0,0.5)] min-h-screen w-full flex items-center justify-center fixed top-0 left-0 ${
+        modalState ? "block opacity-100 z-10 show-modal" : "-z-10 opacity-0 hidden hide-modal"
+      }`}
+    >
+      {isModalTarefa && (
+        <ModalContent
+          title="Adicionar"
+          onClose={() => openClose("isModalTarefa")}
+          onSubmit={handleSubmit(onSubmit)}
+          register={register}
+          loading={loading}
+          error={error}
+          errors={errors}
+          disciplinas={disciplinas}
+        />
+      )}
+      {isModalTarefaEdit && (
+        <ModalContent
+          title="Editar"
+          onClose={() => openClose("isModalTarefaEdit")}
+          onSubmit={handleSubmit(onSubmit)}
+          register={register}
+          loading={loading}
+          error={error}
+          errors={errors}
+          disciplinas={disciplinas}
+        />
+      )}
+    </div>
+  );    
 }
 
 export default ModalTarefa;

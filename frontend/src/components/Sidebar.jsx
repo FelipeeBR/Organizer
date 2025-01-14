@@ -49,7 +49,7 @@ const Sidebar = () => {
                   to={link.url}
                   className={`flex items-center gap-3 px-6 py-2 text-xl relative capitalize text-slate-100 hover:bg-slate-900 hover:text-white duration-300 ${
                     url.pathname === link.url &&
-                    "bg-slate-700 after:absolute after:h-full after:w-[2px] after:bg-green-400 after:top-0 after:right-0 text-black"
+                    "bg-slate-700 after:absolute after:h-full after:w-[2px] after:bg-blue-400 after:top-0 after:right-0 text-black"
                   }`}
                 >
                   {link.icon}
