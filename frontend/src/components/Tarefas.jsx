@@ -7,13 +7,17 @@ import { getAllTarefas, updateTarefa } from '../features/tarefaSlice';
 const Tarefas = () => {
     const dispatch = useDispatch();
     const [newTask, setNewTask] = useState("");
-    //const tarefas = useSelector((state) => state.tarefa.list);
+    const tarefas = useSelector((state) => state.tarefa.list);
     const [listTarefas, setListTarefas] = useState([]);
     const [tasks, setTasks] = useState([]);
 
     const column1Tasks = listTarefas.filter((task) => task.status === "PENDING");
     const column2Tasks = listTarefas.filter((task) => task.status === "IN_PROGRESS");
     const column3Tasks = listTarefas.filter((task) => task.status === "COMPLETED");
+
+    useEffect(() => {
+        setListTarefas(tarefas);
+    }, [tarefas]);
 
     useEffect(() => {
         const fetchTarefas = async () => {

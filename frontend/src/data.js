@@ -22,8 +22,8 @@ const links = [
   },
   {
     id: 5,
-    url: "/fazendo",
-    text: "fazendo",
+    url: "/agenda",
+    text: "agenda",
     icon: <FaRegCalendarAlt className="text-2xl" />,
   },
 ];

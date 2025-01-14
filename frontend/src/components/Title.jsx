@@ -17,8 +17,10 @@ const Title = ({ text }) => {
     else if(String(basePath) === "/disciplina") {
       setNamePath("isModalTarefa");
     }
+    else if(String(basePath) === "/") {
+      setNamePath("isModalTarefa");
+    }
   }, [location.pathname]);
-
   return (
     <div className="flex items-center justify-between">
       <div>

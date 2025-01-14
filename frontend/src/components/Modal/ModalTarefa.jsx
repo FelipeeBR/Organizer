@@ -5,6 +5,7 @@ import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTarefa, updateTarefa, getTarefa } from "../../features/tarefaSlice";
+import { getDisciplinas } from "../../features/disciplinaSlice";
 import { useParams } from 'react-router-dom';
 import { format, addDays } from "date-fns";
 import { toast } from "react-toastify";
@@ -13,6 +14,7 @@ import { toast } from "react-toastify";
 const ModalTarefa = () => {
   const { isModalTarefa, isModalTarefaEdit, editTarefaId, openClose} = useContextApp();
   const modalState = isModalTarefa ? "isModalTarefa" : isModalTarefaEdit ? "isModalTarefaEdit" : null;
+  const [disciplinas, setDisciplinas] = useState([]);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { loading, error } = useSelector((state) => state.tarefa);
@@ -28,6 +30,7 @@ const ModalTarefa = () => {
       description:"",
       status: "PENDING", 
       priority: "BAIXA",
+      disciplinaId: id || null,
       date: format(new Date(), 'yyyy-MM-dd')
     },});
 
@@ -35,7 +38,7 @@ const ModalTarefa = () => {
     const onSubmit = async (data) => {
       const parsedUser = JSON.parse(token);
       const token2 = parsedUser.token;
-      data.disciplinaId = id;
+      //data.disciplinaId = id;
       if (isModalTarefa) {
         const result = await dispatch(createTarefa({ tarefaData: data, token: token2 }));
         if (result.meta.requestStatus === "fulfilled") {
@@ -81,6 +84,24 @@ const ModalTarefa = () => {
       fetchDisciplina();
     }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue]);
 
+    useEffect(() => {
+      const fetchDisciplinas = async () => {
+          const tokenData = JSON.parse(localStorage.getItem('user'));
+          const token = tokenData?.token;
+          if (!token) {
+              console.error('Token não encontrado');
+              return;
+          }
+          const res = await dispatch(getDisciplinas(token));
+          if(res.meta.requestStatus === 'fulfilled') {
+            setDisciplinas(res.payload);
+          }else{
+            console.error(res.payload || 'Erro ao buscar disciplinas');
+          }
+      };
+      fetchDisciplinas();
+    }, [dispatch]);
+    console.log(disciplinas);
     return (
       <div
         className={`bg-[rgba(0,0,0,0.5)] min-h-screen w-full flex items-center justify-center fixed top-0 left-0 ${
@@ -96,6 +117,7 @@ const ModalTarefa = () => {
             loading={loading}
             error={error}
             errors={errors}
+            disciplinas={disciplinas}
           />
         )}
         {isModalTarefaEdit && (
@@ -107,6 +129,7 @@ const ModalTarefa = () => {
             loading={loading}
             error={error}
             errors={errors}
+            disciplinas={disciplinas}
           />
         )}
       </div>
@@ -116,7 +139,7 @@ const ModalTarefa = () => {
 export default ModalTarefa;
 
 
-const ModalContent = ({ title, onClose, onSubmit, register, loading, error, errors }) => (
+const ModalContent = ({ title, onClose, onSubmit, register, loading, error, errors, disciplinas }) => (
   <div className="bg-white p-8 rounded-lg md:w-[700px] w-[300px] content">
     <div className="flex items-center justify-between">
       <RiTaskFill className="text-2xl text-slate-800" />
@@ -146,6 +169,19 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
           ></textarea>
         </div>
         <div>
+          <label className="text-slate-800 text-md font-bold">Disciplina</label>
+          <select 
+            name="disciplinaId"
+            {...register("disciplinaId")}
+            className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+          >
+            <option value="0">Selecione uma disciplina</option>
+            {disciplinas.map((disciplina) => (
+              <option key={disciplina.id} value={disciplina.id}>{disciplina.name}</option>
+            ))}
+          </select>
+        </div>
+        <div>
           <label className="text-slate-800 text-md font-bold">Prioridade</label>
           <select
             name="priority"
@@ -172,7 +208,7 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
         </div>
 
         <div>
-            <label className="text-slate-800 text-md font-bold">Data</label>
+            <label className="text-slate-800 text-md font-bold">Prazo</label>
             <input type="date" {...register("date")} className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"/>
         </div>
 
