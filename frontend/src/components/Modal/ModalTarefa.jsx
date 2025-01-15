@@ -85,7 +85,7 @@ const ModalTarefa = () => {
     };
 
     fetchDisciplina();
-  }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue]);
+  }, [isModalTarefaEdit, editTarefaId, dispatch, token, setValue, reset]);
 
   useEffect(() => {
     const fetchDisciplinas = async () => {

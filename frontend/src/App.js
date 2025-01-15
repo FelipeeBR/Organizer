@@ -14,6 +14,7 @@ import Disciplina from './pages/Disciplina/Disciplina';
 import Tarefa from './pages/Tarefa/Tarefa';
 import DisciplinaTarefa from './pages/Disciplina/DisciplinaTarefa';
 import { ToastContainer } from 'react-toastify';
+import Anotacao from './pages/Anotacao/Anotacao';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -49,6 +50,7 @@ function App() {
               <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/disciplinas" element={<ProtectedRoute><Disciplina /></ProtectedRoute>} />
               <Route path="/disciplina/:id" element={<ProtectedRoute><DisciplinaTarefa /></ProtectedRoute>} />
+              <Route path="/anotacoes" element={<ProtectedRoute><Anotacao /></ProtectedRoute>} />
             </Routes>
           </main>
           <ToastContainer position="top-center"/>

@@ -1,4 +1,4 @@
-import { FaHome, FaTasks, FaCheck, FaRegCalendarAlt, FaBookOpen } from "react-icons/fa";
+import { FaHome, FaCheck, FaRegCalendarAlt, FaBookOpen, FaBook } from "react-icons/fa";
 
 const links = [
   { id: 1, url: "/", text: "Início", icon: <FaHome /> },
@@ -10,14 +10,14 @@ const links = [
   },
   {
     id: 3,
-    url: "/tarefas",
-    text: "tarefas",
-    icon: <FaTasks className="text-2xl" />,
+    url: "/anotacoes",
+    text: "anotações",
+    icon: <FaBook className="text-2xl" />,
   },
   {
     id: 4,
     url: "/concluidos",
-    text: "concluidos",
+    text: "concluídos",
     icon: <FaCheck className="text-2xl" />,
   },
   {
