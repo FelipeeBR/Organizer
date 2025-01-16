@@ -4,11 +4,10 @@ const { createAnotacao, updateAnotacao, getAnotacoes, getAnotacao, deleteAnotaca
 
 const router = express.Router();
 
-router.post("/anotacao", async (req, res) => {
-    var { title, description, token } = req.body;
-
+router.post("/anotacao", auth, async (req, res) => {
+    const { title, description, token } = req.body;
     if(!title || !description) {
-        return res.sendStatus(400);
+        return res.status(400).json({ message: "Titulo ou descrição estão em branco." });
     }
 
     try {
@@ -68,3 +67,5 @@ router.delete("/anotacao/:id", auth, async (req, res) => {
         res.sendStatus(500); 
     }
 });
+
+module.exports = router;

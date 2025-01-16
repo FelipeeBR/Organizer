@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 import { useContextApp } from "../context/AppContext";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Title = ({ text }) => {
   const { openClose } = useContextApp();
@@ -20,7 +20,12 @@ const Title = ({ text }) => {
     else if(String(basePath) === "/") {
       setNamePath("isModalTarefa");
     }
+    else if(String(basePath) === "/anotacoes") {
+      setNamePath("anotacao");
+    }
   }, [location.pathname]);
+
+
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -31,11 +36,20 @@ const Title = ({ text }) => {
       </div>
       <div className="flex gap-2">
         <button className="w-10 h-10 text-slate-700"><IoMdNotifications size={25}/></button>
-        <button onClick={() => openClose(namePath)}
-            className="w-10 h-10 rounded-full border flex items-center justify-center border-white text-white bg-slate-700"
-        >
+        {namePath === "anotacao" &&
+        <Link to={"/anotacoes/novo"}>
+          <button className="w-10 h-10 rounded-full border flex items-center justify-center border-white text-white bg-slate-700">
             <FaPlus />
-        </button>
+          </button>
+        </Link>
+        }
+        {namePath !== "anotacao" &&
+          <button onClick={() => openClose(namePath)}
+              className="w-10 h-10 rounded-full border flex items-center justify-center border-white text-white bg-slate-700"
+          >
+              <FaPlus />
+          </button>
+        }
       </div>
     </div>
   );

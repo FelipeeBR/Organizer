@@ -1,10 +1,12 @@
 import React from 'react'
-import { TextEditor } from '../../components/Anotacao/TextEditor';
+import Title from '../../components/Title';
+import Anotacoes from '../../components/Anotacao/Anotacoes';
 
 const Anotacao = () => {
   return (
     <div>
-        <TextEditor></TextEditor>
+      <Title text="Anotações"/>
+      <Anotacoes/>
     </div>
   )
 }

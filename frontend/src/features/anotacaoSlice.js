@@ -5,9 +5,13 @@ const API = process.env.REACT_APP_API_URL;
 
 export const createAnotacao = createAsyncThunk(
     'anotacao/create',
-    async (anotacaoData, { rejectWithValue }) => {
+    async ({anotacaoData, token}, { rejectWithValue }) => {
       try {
-        const response = await axios.post(`${API}/anotacao`, anotacaoData);
+        const response = await axios.post(`${API}/anotacao`, anotacaoData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         return response.data;
       } catch (error) {
         if(error.response && error.response.data) {
@@ -158,7 +162,7 @@ const anotacaoSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(updateDisciplina.pending, (state) => {
+            .addCase(updateAnotacao.pending, (state) => {
                     state.loading = true;
                     state.error = null;
             })
