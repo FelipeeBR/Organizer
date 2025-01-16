@@ -9,7 +9,7 @@ import { updateAnotacao, getAnotacao } from "../../features/anotacaoSlice";
 import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
 import { FaSave, FaBan } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const AnotacaoEdit = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -102,9 +102,11 @@ const AnotacaoEdit = () => {
         </div>
         <input type="hidden" {...register("description")}/>
         <div className="flex justify-end gap-3">
-          <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
-            <FaBan />
-          </button>
+          <Link to={"/anotacoes"}>
+            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+              <FaBan />
+            </button>
+          </Link>
           <button type="submit" className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
             <FaSave />
           </button>
