@@ -167,7 +167,7 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
           <textarea
             type="text"
             name="description"
-            className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+            className="w-full px-8 py-4 min-h-32 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             placeholder="Descrição"
             {...register("description")}
           ></textarea>

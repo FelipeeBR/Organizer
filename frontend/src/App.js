@@ -17,6 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import Anotacao from './pages/Anotacao/Anotacao';
 import NovaAnotacao from './pages/Anotacao/NovaAnotacao/NovaAnotacao';
 import AnotacaoEdit from './pages/Anotacao/AnotacaoEdit';
+import Agenda from './pages/Agenda/Agenda';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -55,6 +56,7 @@ function App() {
               <Route path="/anotacoes" element={<ProtectedRoute><Anotacao /></ProtectedRoute>} />
               <Route path="/anotacoes/novo" element={<ProtectedRoute><NovaAnotacao /></ProtectedRoute>} />
               <Route path="/anotacao/:id" element={<ProtectedRoute><AnotacaoEdit /></ProtectedRoute>} />
+              <Route path="/agenda" element={<ProtectedRoute><Agenda/></ProtectedRoute>} />
             </Routes>
           </main>
           <ToastContainer position="top-center"/>

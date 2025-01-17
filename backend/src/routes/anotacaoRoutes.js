@@ -23,7 +23,7 @@ router.get("/anotacoes", auth, async (req, res) => {
     try {
         const posts = await getAnotacoes(req.token); 
 
-        if (posts.length === 0) {
+        if(posts.length === 0) {
             return res.status(404).json({ message: "Não possui anotações" });
         }
         return res.status(200).json(posts); 
