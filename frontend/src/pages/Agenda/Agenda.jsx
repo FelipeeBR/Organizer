@@ -1,37 +1,24 @@
 import React from 'react';
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import brLocale from '@fullcalendar/core/locales/pt-br';
-
-const events = [
-  { title: 'Terminar esse sistema', start: new Date() }
-]
+import Calendario from '../../components/Agenda/Calendario';
+import Title from '../../components/Title';
+import Agendas from '../../components/Agenda/Agendas';
+import ModalAgenda from '../../components/Modal/ModalAgenda';
 
 const Agenda = () => {
   return (
     <div>
-        <div>
-            <h1>Calendário</h1>
-            <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView='dayGridMonth'
-                weekends={false}
-                events={events}
-                eventContent={renderEventContent}
-                locale={brLocale}
-            />
+      <Title text={"Agenda"}/>
+      <ModalAgenda/>
+      <div className='md:flex flex flex-col'>
+        <div className='md:w-1/2 w-full'>
+          <Calendario/>
         </div>
+        <div className='md:w-1/2 w-full'>
+          <Agendas/>
+        </div>
+      </div>
     </div>
   )
 }
 
 export default Agenda;
-
-function renderEventContent(eventInfo) {
-    return (
-      <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
-      </>
-    )
-}

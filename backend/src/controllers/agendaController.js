@@ -6,10 +6,12 @@ async function createAgenda(description, date, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decoded.id;
+        let dateBrazil = new Date(date);
+        dateBrazil.setHours(dateBrazil.getHours() - 3);
         const data = await prisma.agenda.create({
             data: {
                 description: description,
-                date: date,
+                date: new Date(dateBrazil),
                 userId: userId,
             }
         });
@@ -21,13 +23,15 @@ async function createAgenda(description, date, token) {
 
 async function updateAgenda(id, description, date) {
     try {
+        let dateBrazil = new Date(date);
+        dateBrazil.setHours(dateBrazil.getHours() - 3);
         const data = await prisma.agenda.update({
             where: {
                 id: parseInt(id)
             },
             data: {
                 description: description,
-                date: date,
+                date: new Date(dateBrazil),
             }
         });
         return data;

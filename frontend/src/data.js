@@ -27,48 +27,4 @@ const links = [
     icon: <FaRegCalendarAlt className="text-2xl" />,
   },
 ];
-
-export const tasks = [
-  {
-    id: 5,
-    title: "testing with passwords",
-    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora consectetur sint molestiae accusantium aliquam, non nam voluptas.",
-    completed: false,
-    important: true,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 6,
-    title: "another task that makes object",
-    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-    completed: false,
-    important: false,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 7,
-    title: "home work tomorow",
-    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora consectetur sint molestiae accusantium aliquam, non nam voluptas. Sit quas molestiae vel incidunt dicta, nisi odit, quam explicabo consectetur in nam!",
-    completed: true,
-    important: false,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 8,
-    title: "create full stack projects",
-    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. ",
-    completed: false,
-    important: true,
-    date: new Date().toLocaleDateString(),
-  },
-  {
-    id: 9,
-    title: "learn react basics",
-    desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora consectetur sint molestiae accusantium aliquam, non nam voluptas. Sit quas molestiae vel incidunt dicta, nisi odit, quam explicabo consectetur in nam!",
-    completed: true,
-    important: true,
-    date: new Date().toLocaleDateString(),
-  },
-];
-
 export default links;

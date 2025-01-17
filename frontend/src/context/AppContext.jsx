@@ -12,8 +12,11 @@ const initialState = {
     isModalDisciplinaEdit: false,
     isModalTarefa: false,
     isModalTarefaEdit: false,
+    isModalAnotacao: false,
+    isModalAnotacaoEdit: false,
     editDisciplinaId: null,
     editTarefaId: null,
+    editAgendaId: null,
 };
 
 const AppProvider = ({ children }) => {
@@ -24,9 +27,9 @@ const AppProvider = ({ children }) => {
   };
   return (
     <AppContext.Provider
-        value={{ ...state, openClose }}
+      value={{ ...state, openClose }}
     >
-        {children}
+      {children}
     </AppContext.Provider>
   );
 };

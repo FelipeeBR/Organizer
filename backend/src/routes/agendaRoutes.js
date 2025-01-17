@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/agenda", auth, async (req, res) => {
     const { description, date, token } = req.body;
+
     if(!date|| !description) {
         return res.status(400).json({ message: "Data ou descrição estão em branco." });
     }

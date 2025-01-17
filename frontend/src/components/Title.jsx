@@ -23,6 +23,9 @@ const Title = ({ text }) => {
     else if(String(basePath) === "/anotacoes") {
       setNamePath("anotacao");
     }
+    else if(String(basePath) === "/agenda") {
+      setNamePath("isModalAgenda");
+    }
   }, [location.pathname]);
 
 
