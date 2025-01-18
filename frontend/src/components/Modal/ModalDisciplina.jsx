@@ -59,7 +59,7 @@ const ModalDisciplina = () => {
       const fetchDisciplina = async () => {
         const parsedUser = JSON.parse(token);
         const token2 = parsedUser.token;
-          if (isModalDisciplinaEdit) {
+          if(isModalDisciplinaEdit) {
               try {
                   const result = await dispatch(getDisciplina({id: editDisciplinaId, token: token2}));
                   const disciplina = result.payload;
@@ -68,11 +68,13 @@ const ModalDisciplina = () => {
               } catch (error) {
                   console.error("Erro ao buscar disciplina:", error);
               }
+          }else {
+            reset({});
           }
       };
   
       fetchDisciplina();
-    }, [isModalDisciplinaEdit, editDisciplinaId, dispatch, token, setValue]);
+    }, [isModalDisciplinaEdit, editDisciplinaId, dispatch, token, setValue, reset]);
 
     return (
       <div

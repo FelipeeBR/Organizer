@@ -70,11 +70,13 @@ const ModalAgenda = () => {
               } catch (error) {
                   console.error("Erro ao buscar agenda:", error);
               }
+          }else {
+            reset({});
           }
       };
   
       fetchAgenda();
-    }, [isModalAgendaEdit, editAgendaId, dispatch, token, setValue]);
+    }, [isModalAgendaEdit, editAgendaId, dispatch, token, setValue, reset]);
 
     return (
       <div
