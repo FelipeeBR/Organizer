@@ -4,7 +4,7 @@ import Anotacoes from '../../components/Anotacao/Anotacoes';
 
 const Anotacao = () => {
   return (
-    <div>
+    <div className='h-full overflow-y-auto'>
       <Title text="Anotações"/>
       <Anotacoes/>
     </div>

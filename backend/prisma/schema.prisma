@@ -22,6 +22,7 @@ model Usuario {
   agenda      Agenda[]
   anotacao    Anotacao[]
   tarefa      Tarefa[]
+  notificao Notificacao[]
 }
 
 model Disciplina {
@@ -74,4 +75,13 @@ model Anotacao {
   userId      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Notificacao {
+  id          Int      @id @default(autoincrement())
+  descricao   String
+  dataEnvio   DateTime @default(now())
+  lida        Boolean  @default(false)
+  userId      Int
+  User        Usuario  @relation(fields: [userId], references: [id])
 }

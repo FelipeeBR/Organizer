@@ -25,7 +25,6 @@ const Calendario = () => {
 
   return (
     <div>
-        <h1>Calendário</h1>
         <FullCalendar
             plugins={[dayGridPlugin]}
             initialView='dayGridMonth'
@@ -44,9 +43,9 @@ export default Calendario;
 function renderEventContent(eventInfo) {
   console.log(eventInfo)
     return (
-      <>
-        <b>{eventInfo.timeText}</b>
+      <div className='bg-blue-600 rounded text-white'>
+        <b className=''>{eventInfo.timeText}</b>
         <i>{eventInfo.event.extendedProps.description}</i>
-      </>
+      </div>
     )
 }

@@ -6,7 +6,7 @@ import ModalAgenda from '../../components/Modal/ModalAgenda';
 
 const Agenda = () => {
   return (
-    <div>
+    <div className='h-full overflow-y-auto'>
       <Title text={"Agenda"}/>
       <ModalAgenda/>
       <div className="flex flex-col md:flex-row">
