@@ -154,6 +154,14 @@ const agendaSlice = createSlice({
             .addCase(updateAgenda.fulfilled, (state, action) => {
                 state.loading = false;
                 state.agenda = action.payload;
+                const updatedAgenda = action.payload;
+                const index = state.list.findIndex(agenda => agenda.id === updatedAgenda.id);
+                if (index !== -1) {
+                    state.list[index] = updatedAgenda;
+                } else {
+                    state.list.push(updatedAgenda);
+                }
+                state.disciplina = updatedAgenda;
             })
             .addCase(updateAgenda.rejected, (state, action) => {
                 state.loading = false;
@@ -166,6 +174,9 @@ const agendaSlice = createSlice({
             .addCase(deleteAgenda.fulfilled, (state, action) => {
                 state.loading = false;
                 state.agenda = action.payload;
+                state.list = state.list.filter(
+                    (agenda) => agenda.id !== action.meta.arg.id
+                );
             })
             .addCase(deleteAgenda.rejected, (state, action) => {
                 state.loading = false;

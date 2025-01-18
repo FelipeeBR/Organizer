@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { createAgenda, updateAgenda, getAgenda } from "../../features/agendaSlice";
+import { createAgenda, updateAgenda, getAgenda, getAgendas } from "../../features/agendaSlice";
 import { toast } from "react-toastify";
+import { max } from "date-fns";
 
 
 const ModalAgenda = () => {
@@ -127,9 +128,11 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
             name="description"
             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             placeholder="Descrição"
-            {...register("description", { required: true })}
+            {...register("description", { required: true, maxLength: 30 })}
             
           ></textarea>
+          {errors.description && <p className="text-red-500 text-sm">Preencha a descrição</p>}
+          {errors.description?.type === "maxLength" && <p className="text-red-500 text-sm">Limite de 30 caracteres</p>}
         </div>
         <div>
             <label className="text-lg text-slate-800">Data</label>

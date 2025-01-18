@@ -1,24 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import brLocale from '@fullcalendar/core/locales/pt-br';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAgendas } from '../../features/agendaSlice';
 
-const events = [
-  { title: 'Terminar esse sistema 1', start: new Date() },
-  { title: 'Terminar esse sistema 2', start: new Date() },
-]
 
 const Calendario = () => {
+  const agendas = useSelector((state) => state.agenda.list);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchAgendas = async () => {
+      const tokenData = JSON.parse(localStorage.getItem("user"));
+      const token = tokenData?.token;
+      if (!token) {
+        console.error("Token não encontrado");
+        return;
+      }
+      await dispatch(getAgendas(token));
+    };
+    fetchAgendas();
+  }, [dispatch]);
+  console.log(agendas);
+
   return (
     <div>
         <h1>Calendário</h1>
         <FullCalendar
             plugins={[dayGridPlugin]}
             initialView='dayGridMonth'
-            weekends={false}
-            events={events}
+            weekends={true}
+            events={agendas}
             eventContent={renderEventContent}
             locale={brLocale}
+            timeZone="America/Sao_Paulo"
         />
 </div>
   )
@@ -27,10 +42,11 @@ const Calendario = () => {
 export default Calendario;
 
 function renderEventContent(eventInfo) {
+  console.log(eventInfo)
     return (
       <>
         <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
+        <i>{eventInfo.event.extendedProps.description}</i>
       </>
     )
 }

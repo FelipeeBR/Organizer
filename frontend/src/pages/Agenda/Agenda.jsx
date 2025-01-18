@@ -9,12 +9,12 @@ const Agenda = () => {
     <div>
       <Title text={"Agenda"}/>
       <ModalAgenda/>
-      <div className='md:flex flex flex-col'>
-        <div className='md:w-1/2 w-full'>
-          <Calendario/>
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2">
+          <Calendario />
         </div>
-        <div className='md:w-1/2 w-full'>
-          <Agendas/>
+        <div className="w-full md:w-1/2">
+          <Agendas />
         </div>
       </div>
     </div>
