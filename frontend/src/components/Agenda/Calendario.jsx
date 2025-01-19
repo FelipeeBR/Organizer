@@ -21,7 +21,6 @@ const Calendario = () => {
     };
     fetchAgendas();
   }, [dispatch]);
-  console.log(agendas);
 
   return (
     <div>

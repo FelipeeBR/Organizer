@@ -153,7 +153,6 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
             <FaPlus /> {loading ? "Carregando..." : title}
           </button>
         </div>
-        {error && <p className="text-red-600 text-sm">{error.error || "Ocorreu um erro"}</p>}
       </form>
     </div>
   </div>

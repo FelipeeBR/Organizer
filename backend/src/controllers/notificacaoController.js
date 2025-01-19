@@ -30,7 +30,7 @@ async function verificarNotificacoes() {
         if (!existeNotificacao) {
             await prisma.notificacao.create({
                 data: {
-                    descricao: `Lembrete: ${tarefa.title} - ${tarefa.description}`,
+                    descricao: `Tarefa: ${tarefa.title} - ${tarefa.description}`,
                     userId: tarefa.userId,
                     tarefaId: tarefa.id,
                 },
@@ -80,6 +80,9 @@ async function getNotificacoes(token) {
         const notificacoes = await prisma.notificacao.findMany({
             where: {
                 userId: userId,
+                AND: [
+                    { lida: false },
+                ],
             },
         });
         if(!notificacoes) {

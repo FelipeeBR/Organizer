@@ -11,15 +11,20 @@ router.post('/notificacoes/verificar', auth, async (req, res) => {
 
 router.put('/notificacoes/:id', async (req, res) => {
     const { id } = req.params;
-    await updateNotificacao(id);
-    res.json({ message: 'Notificação atualizada com sucesso' });
+    try {
+        const notificacao = await updateNotificacao(id);
+        res.status(200).json(notificacao); 
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
 });
 
 router.get('/notificacoes', auth, async (req, res) => {
     try {
         const notificacoes = await getNotificacoes(req.token);
         if(notificacoes.length === 0) {
-            return res.status(404).json({ message: "Não possui agendas" });
+            return res.status(404).json({ message: "Não possui notificações" });
         }
         return res.status(200).json(notificacoes); 
     } catch (error) {

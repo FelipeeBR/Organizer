@@ -48,9 +48,10 @@ export const getNotificacoes = createAsyncThunk(
 
 export const updateNotificacao = createAsyncThunk(
     'notificacao/update',
-    async ({ id, notificacaoData, token }, { rejectWithValue }) => {
+    async ({ id, token }, { rejectWithValue }) => {
+        console.log(token)
         try {
-            const response = await axios.put(`${API}/notificacoes/${id}`, notificacaoData, {
+            const response = await axios.put(`${API}/notificacoes/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -106,10 +107,18 @@ const notificacaoSlice = createSlice({
         .addCase(updateNotificacao.fulfilled, (state, action) => {
             state.loading = false;
             const updatedNotificacao = action.payload;
-            const index = state.list.findIndex((notificacao) => notificacao.id === updatedNotificacao.id);
-            if (index !== -1) {
-                state.list[index] = updatedNotificacao;
+            if(!Array.isArray(state.list)) {
+                state.list = []; 
             }
+            const index = state.list.findIndex(
+                (notificacao) => notificacao.id === updatedNotificacao.id
+            );
+            if(index !== -1) {
+                state.list[index] = updatedNotificacao;
+            }else {
+                state.list.push(updatedNotificacao);
+            }
+            state.notificacao = updatedNotificacao;
         })
         .addCase(updateNotificacao.rejected, (state, action) => {
             state.loading = false;

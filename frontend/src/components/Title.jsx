@@ -83,14 +83,16 @@ const Title = ({ text }) => {
       </div>
       <div className="flex gap-2">
         <div>
-          <button className="relative w-10 h-10 flex items-center justify-center text-slate-700">
-            <IoMdNotifications size={25} />
-            {notificacao.length > 0 && (
-              <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 border-2 border-white text-white font-semibold">
-                {notificacao.length}
-              </span>
-            )}
-          </button>
+          <Link to={"/notificacoes"}>
+            <button className="relative w-10 h-10 flex items-center justify-center text-slate-700">
+              <IoMdNotifications size={25} />
+              {notificacao.length > 0 && (
+                <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 border-2 border-white text-white font-semibold">
+                  {notificacao.length}
+                </span>
+              )}
+            </button>
+          </Link>
         </div>
         {namePath === "anotacao" &&
         <Link to={"/anotacoes/novo"}>
