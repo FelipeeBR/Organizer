@@ -4,40 +4,58 @@ const prisma = new PrismaClient();
 
 async function verificarNotificacoes() {
     const tarefas = await prisma.tarefa.findMany({
-      where: {
-        date: {
-          lte: new Date(), 
+        where: {
+            date: {
+                lte: new Date(),
+            },
+            status: { not: 'COMPLETED' },
         },
-        status: { not: 'COMPLETED' },
-      },
     });
-  
+
     const agendas = await prisma.agenda.findMany({
-      where: {
-        date: {
-          lte: new Date(),
+        where: {
+            date: {
+                lte: new Date(),
+            },
         },
-      },
     });
-  
+
     for (const tarefa of tarefas) {
-      await prisma.notificacao.create({
-        data: {
-          descricao: `Lembrete: ${tarefa.title} - ${tarefa.description}`,
-          userId: tarefa.userId,
-        },
-      });
+        const existeNotificacao = await prisma.notificacao.findFirst({
+            where: {
+                tarefaId: tarefa.id,
+            },
+        });
+
+        if (!existeNotificacao) {
+            await prisma.notificacao.create({
+                data: {
+                    descricao: `Lembrete: ${tarefa.title} - ${tarefa.description}`,
+                    userId: tarefa.userId,
+                    tarefaId: tarefa.id,
+                },
+            });
+        }
     }
-  
+
     for (const agenda of agendas) {
-      await prisma.notificacao.create({
-        data: {
-          descricao: `Agenda: ${agenda.description}`,
-          userId: agenda.userId,
-        },
-      });
+        const existeNotificacao = await prisma.notificacao.findFirst({
+            where: {
+                agendaId: agenda.id,
+            },
+        });
+
+        if (!existeNotificacao) {
+            await prisma.notificacao.create({
+                data: {
+                    descricao: `Agenda: ${agenda.description}`,
+                    userId: agenda.userId,
+                    agendaId: agenda.id,
+                },
+            });
+        }
     }
-};
+}
 
 async function updateNotificacao(id) {
     try {
@@ -64,8 +82,12 @@ async function getNotificacoes(token) {
                 userId: userId,
             },
         });
+        if(!notificacoes) {
+            return null;
+        }
         return notificacoes;
     } catch (error) {
+        console.log(error);
         return error;
     }
 };

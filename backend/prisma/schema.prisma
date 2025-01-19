@@ -45,6 +45,7 @@ model Tarefa {
   Disciplina   Disciplina? @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
   userId  Int?
   User    Usuario? @relation(fields: [userId], references: [id])
+  notificacoes  Notificacao[]
 }
 
 enum TaskStatus {
@@ -65,6 +66,7 @@ model Agenda {
   date        DateTime
   User        Usuario  @relation(fields: [userId], references: [id])
   userId      Int
+  notificacoes Notificacao[]
 }
 
 model Anotacao {
@@ -84,4 +86,8 @@ model Notificacao {
   lida        Boolean  @default(false)
   userId      Int
   User        Usuario  @relation(fields: [userId], references: [id])
+  tarefaId    Int?
+  Tarefa      Tarefa? @relation(fields: [tarefaId], references: [id], onDelete: Cascade)
+  agendaId    Int?
+  Agenda      Agenda? @relation(fields: [agendaId], references: [id], onDelete: Cascade)
 }

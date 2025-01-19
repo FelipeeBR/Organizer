@@ -5,6 +5,7 @@ import disciplinaReducer from '../features/disciplinaSlice';
 import tarefaReducer from '../features/tarefaSlice';
 import anotacaoReducer from '../features/anotacaoSlice';
 import agendaReducer from '../features/agendaSlice';
+import notificacaoReducer from '../features/notificacaoSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     tarefa: tarefaReducer,
     anotacao: anotacaoReducer,
     agenda: agendaReducer,
+    notificacao: notificacaoReducer,
   },
 });
 

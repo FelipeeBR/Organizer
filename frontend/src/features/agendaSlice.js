@@ -6,7 +6,6 @@ const API = process.env.REACT_APP_API_URL;
 export const createAgenda = createAsyncThunk(
     'agenda/create',
     async ({ agendaData, token }, { rejectWithValue }) => {
-        console.log(agendaData, token);
         try {
             const response = await axios.post(`${API}/agenda`, agendaData, {
                 headers: {
