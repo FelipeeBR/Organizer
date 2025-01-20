@@ -5,12 +5,34 @@ import { useContextApp } from "../context/AppContext";
 import { logoutUser, checkToken } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { getUser } from "../features/userSlice";
 
 const Sidebar = () => {
   const { isSidebar, openClose } = useContextApp();
   const url = useLocation();
+  const [name, setName] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const tokenData = JSON.parse(localStorage.getItem('user'));
+        const token = tokenData?.token;
+        if (!token) {
+            console.error('Token não encontrado');
+            return;
+        }
+        const res = await dispatch(getUser({token: token}));
+        if(res.meta.requestStatus === 'fulfilled') {
+          setName(res.payload);
+        }else{
+          console.error(res.payload || 'Erro');
+        }
+    };
+    fetchUserName();
+  }, [dispatch]);
+
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -35,10 +57,10 @@ const Sidebar = () => {
         </button>
         <div className="flex items-center gap-2 px-6">
           <div className="flex rounded-full bg-green-600 w-10 h-10 items-center p-3">
-            <span className="text-white text-3xl">F</span>
+            <span className="text-white text-3xl">{(name || "").substring(0, 1)}</span>
           </div>
           <div className="">
-            <h4 className="text-slate-100 text-xl font-medium">Felipe Mendes</h4>
+            <h4 className="text-slate-100 text-xl font-medium">{name}</h4>
           </div>
         </div>
         <ul className="">

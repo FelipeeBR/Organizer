@@ -11,7 +11,6 @@ import Sidebar from "./components/Sidebar";
 import { FaBars } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import Disciplina from './pages/Disciplina/Disciplina';
-import Tarefa from './pages/Tarefa/Tarefa';
 import DisciplinaTarefa from './pages/Disciplina/DisciplinaTarefa';
 import { ToastContainer } from 'react-toastify';
 import Anotacao from './pages/Anotacao/Anotacao';

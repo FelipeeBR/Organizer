@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import brLocale from '@fullcalendar/core/locales/pt-br';
@@ -40,7 +40,6 @@ const Calendario = () => {
 export default Calendario;
 
 function renderEventContent(eventInfo) {
-  console.log(eventInfo)
     return (
       <div className='bg-blue-600 rounded text-white'>
         <b className=''>{eventInfo.timeText}</b>

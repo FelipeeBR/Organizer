@@ -1,6 +1,6 @@
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { BiSolidBookAdd } from "react-icons/bi";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';

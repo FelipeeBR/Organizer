@@ -47,7 +47,7 @@ const Login = () => {
                             <div className="w-full flex-1 mt-8">
                                 <div className="flex flex-col items-center">
                                     <button
-                                        className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+                                        className="w-full h-10 max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                         <div className="bg-white p-2 rounded-full">
                                             <FcGoogle />
                                         </div>
@@ -67,7 +67,7 @@ const Login = () => {
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className='mb-3'>
                                             <input
-                                                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                                className="w-full px-8 py-4 h-10 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                                                 type="email" placeholder="Email" {...register("email", { required: true, pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/ })}/>
                                         </div>
 
@@ -80,7 +80,7 @@ const Login = () => {
 
                                         <div className="flex items-center gap-2 rounded relative">
                                             <input
-                                                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                                className="w-full px-8 py-4 h-10 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                                                 type={showPassword ? "text" : "password"}
                                                 placeholder="Senha"
                                                 {...register("password", { required: true })}
@@ -98,7 +98,7 @@ const Login = () => {
                                         )}
                                         
                                         <button type="submit" disabled={loading}
-                                            className="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                                            className="mt-5 h-10 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                             <span className="ml-3">
                                                 {loading ? 'Carregando...' : 'Entrar'}
                                             </span>

@@ -116,6 +116,7 @@ const agendaSlice = createSlice({
             .addCase(createAgenda.fulfilled, (state, action) => {
                 state.loading = false;
                 state.agenda = action.payload;
+                state.list.push(action.payload);
             })
             .addCase(createAgenda.rejected, (state, action) => {
                 state.loading = false;

@@ -1,12 +1,11 @@
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { BiSolidBookAdd } from "react-icons/bi";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useContextApp } from '../../context/AppContext';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { createAgenda, updateAgenda, getAgenda, getAgendas } from "../../features/agendaSlice";
+import { createAgenda, updateAgenda, getAgenda } from "../../features/agendaSlice";
 import { toast } from "react-toastify";
-import { max } from "date-fns";
 
 
 const ModalAgenda = () => {
