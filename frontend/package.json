@@ -11,6 +11,7 @@
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "date-fns": "^4.1.0",
+    "draft-js-import-html": "^1.4.1",
     "draftjs-to-html": "^0.9.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
