@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
+import { DefaultEditor } from 'react-simple-wysiwyg';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { createAnotacao } from "../../features/anotacaoSlice";
@@ -11,7 +8,7 @@ import { FaSave, FaBan } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
 
 const TextEditor = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [description, setDescription] = useState();
   const dispatch = useDispatch();
   const token = localStorage.getItem('user');
   const navigate = useNavigate();
@@ -21,14 +18,14 @@ const TextEditor = () => {
     formState: { errors },
   } = useForm({ defaultValues: { title: "", description: "" } });
 
-  const onEditorStateChange = (newEditorState) => {
-    setEditorState(newEditorState);
+  const handleChange = (event) => {
+    setDescription(event.target.value);
   };
 
   const onSubmit = async (data) => {
     const parsedUser = JSON.parse(token);
     const token2 = parsedUser.token;
-    data.description = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    data.description = description;
     data.token = token2;
     const result = await dispatch(createAnotacao({ anotacaoData: data, token: token2 }));
     if(result.meta.requestStatus === "fulfilled") {
@@ -55,12 +52,7 @@ const TextEditor = () => {
         )}
       </div>
       <div className="bg-white rounded-lg min-h-10">
-        <Editor
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={onEditorStateChange}
-        />
+        <DefaultEditor value={description} onChange={handleChange}/>
       </div>
       <div className="flex justify-end gap-3">
         <Link to={"/anotacoes"}>

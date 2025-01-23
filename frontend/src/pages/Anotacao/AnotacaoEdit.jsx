@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw, ContentState, convertFromHTML } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
+import Editor from 'react-simple-wysiwyg';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { updateAnotacao, getAnotacao } from "../../features/anotacaoSlice";
@@ -12,8 +9,7 @@ import { FaSave, FaBan } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
 
 const AnotacaoEdit = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem('user');
@@ -28,7 +24,7 @@ const AnotacaoEdit = () => {
   const onSubmit = async (data) => {
     const parsedUser = JSON.parse(token);
     const token2 = parsedUser.token;
-    data.description = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    data.description = description
     data.token = token2;
     const result = await dispatch(updateAnotacao({id:id, anotacaoData: data, token: token2 }));
     if(result.meta.requestStatus === "fulfilled") {
@@ -40,10 +36,6 @@ const AnotacaoEdit = () => {
     }
   };
 
-  const decodeHtmlContent = (htmlString) => {
-    return htmlString.replace(/\\/g, '');
-  };
-
   useEffect(() => {
       const fetchAnotacao = async () => {
         const parsedUser = JSON.parse(token);
@@ -53,17 +45,8 @@ const AnotacaoEdit = () => {
             const anotacao = result.payload;
             setValue("title", anotacao?.title || "");
             if (anotacao?.description) {
-              const decodedDescription = decodeHtmlContent(anotacao.description);
-
-              const blocksFromHTML = convertFromHTML(decodedDescription);
-              const contentState = ContentState.createFromBlockArray(
-                blocksFromHTML.contentBlocks,
-                blocksFromHTML.entityMap
-              );
-              const editorState = EditorState.createWithContent(contentState);
-              setEditorState(editorState); 
-              setValue("description", decodedDescription); 
-              setDescription(decodedDescription);
+              setValue("description", anotacao?.description); 
+              setDescription(anotacao?.description);
             }
         } catch (error) {
             console.error("Erro ao buscar anotacao:", error);
@@ -71,6 +54,10 @@ const AnotacaoEdit = () => {
       };
       fetchAnotacao();
     }, [dispatch, token, id, setValue]);
+
+    const handleChange = (event) => {
+      setDescription(event.target.value);
+    };
 
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,18 +74,7 @@ const AnotacaoEdit = () => {
           )}
         </div>
         <div className="bg-white rounded-lg min-h-10">
-          <Editor
-            editorState={editorState}
-            wrapperClassName="demo-wrapper"
-            editorClassName="demo-editor"
-            onEditorStateChange={(newEditorState) => {
-              setEditorState(newEditorState);
-              setValue(
-                "description",
-                description
-              );
-            }}
-          />
+          <Editor value={description} onChange={handleChange}/>
         </div>
         <input type="hidden" {...register("description")}/>
         <div className="flex justify-end gap-3">
