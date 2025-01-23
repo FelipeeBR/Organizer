@@ -1,14 +1,37 @@
 import React from 'react';
 import { Draggable } from "@hello-pangea/dnd";
-import { FaEdit, FaTrash, FaExclamationCircle, FaClock } from "react-icons/fa";
+import { FaEdit, FaTrash, FaExclamationCircle, FaClock, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useDispatch } from 'react-redux';
 import { deleteTarefa } from '../features/tarefaSlice';
 import { useContextApp } from "../context/AppContext";
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 
+const getTaskStatusDetails = (task) => {
+  const taskDate = addDays(new Date(task.date), 1);
+  if (task.status === "COMPLETED") {
+    return {
+      icon: FaCheckCircle,
+      color: "text-green-500",
+      message: `Até o dia ${format(taskDate, "dd/MM/yyyy")}`,
+    };
+  } else if (taskDate > new Date()) {
+    return {
+      icon: FaClock,
+      color: "text-blue-500",
+      message: `Até o dia ${format(taskDate, "dd/MM/yyyy")}`,
+    };
+  } else {
+    return {
+      icon: FaExclamationCircle,
+      color: "text-red-500",
+      message: `Até o dia ${format(taskDate, "dd/MM/yyyy")}`,
+    };
+  }
+};
 
 const Tarefa = ({ task, index }) => {
+  const { icon: Icon, color, message } = getTaskStatusDetails(task);
   const dispatch = useDispatch();
   const { openClose } = useContextApp()
 
@@ -37,17 +60,10 @@ const Tarefa = ({ task, index }) => {
         className="w-full bg-white rounded-lg shadow-md flex flex-col justify-between border border-slate-300 p-4"
       >
         <p className="font-medium">{task.title}</p>
-        {new Date(task.date) > new Date() ? (
-          <div className="flex items-center text-blue-500 gap-2">
-            <FaClock/>
-            <p className="ml-2">Até o dia {format(new Date(task.date),"dd/MM/yyyy")}</p>
-          </div>
-        ) : (
-          <div className='flex items-center text-red-500 gap-2'>
-            <FaExclamationCircle/>
-            <p className="ml-2">Até o dia {format(new Date(task.date),"dd/MM/yyyy")}</p>
-          </div>
-        )}
+        <div className={`flex items-center ${color} gap-2`}>
+          <Icon />
+          <p className="ml-2">{message}</p>
+        </div>
         <div className="mt-4 flex gap-2">
           <button
           onClick={() => handleEditTarefa(task.id)}
