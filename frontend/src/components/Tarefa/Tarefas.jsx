@@ -11,7 +11,6 @@ const Tarefas = () => {
     const { openClose } = useContextApp();
     const { id } = useParams();
     const tarefas = useSelector((state) => state.tarefa.list);
-    const [listTarefas, setListTarefas] = useState([]);
   
     useEffect(() => {
       const fetchTarefas = async () => {
@@ -24,7 +23,7 @@ const Tarefas = () => {
 
           const res = await dispatch(getTarefas({ id: id, token: token }));
           if(res.meta.requestStatus === 'fulfilled') {
-            setListTarefas(res.payload);
+            console.log(res.payload);
           }else{
             console.error(res.payload || 'Erro ao buscar tarefas');
           }
