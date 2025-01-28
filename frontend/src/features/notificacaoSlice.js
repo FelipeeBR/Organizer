@@ -49,7 +49,6 @@ export const getNotificacoes = createAsyncThunk(
 export const updateNotificacao = createAsyncThunk(
     'notificacao/update',
     async ({ id, token }, { rejectWithValue }) => {
-        console.log(token)
         try {
             const response = await axios.put(`${API}/notificacoes/${id}`, {
                 headers: {

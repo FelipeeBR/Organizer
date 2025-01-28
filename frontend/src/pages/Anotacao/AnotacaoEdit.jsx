@@ -60,34 +60,36 @@ const AnotacaoEdit = () => {
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-5">
-          <input
-            type="text"
-            name="title"
-            className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-            placeholder="Título"
-            {...register("title", { required: "Preencha o título" })}
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm">{errors.title.message}</p>
-          )}
-        </div>
-        <div className="bg-white rounded-lg min-h-10">
-          <Editor value={description} onChange={handleChange}/>
-        </div>
-        <input type="hidden" {...register("description")}/>
-        <div className="flex justify-end gap-3">
-          <Link to={"/anotacoes"}>
-            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
-              <FaBan />
+      <div className='h-full overflow-y-auto'>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-5">
+            <input
+              type="text"
+              name="title"
+              className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              placeholder="Título"
+              {...register("title", { required: "Preencha o título" })}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm">{errors.title.message}</p>
+            )}
+          </div>
+          <div className="bg-white rounded-lg min-h-10">
+            <Editor value={description} onChange={handleChange}/>
+          </div>
+          <input type="hidden" {...register("description")}/>
+          <div className="flex justify-end gap-3">
+            <Link to={"/anotacoes"}>
+              <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+                <FaBan />
+              </button>
+            </Link>
+            <button type="submit" className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
+              <FaSave />
             </button>
-          </Link>
-          <button type="submit" className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
-            <FaSave />
-          </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     );
 };
 
