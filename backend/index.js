@@ -15,18 +15,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowedOrigins = [
-      process.env.URL_ORIGIN, 
-    ];
+    const allowedOrigins = [process.env.URL_ORIGIN];
 
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`Bloqueado pelo CORS: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

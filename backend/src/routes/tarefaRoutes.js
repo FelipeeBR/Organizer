@@ -64,13 +64,14 @@ router.delete("/tarefa/:id", auth, async (req, res) => {
     }
 });
 
-router.get("/tarefasUser", auth, async (req, res) => {
+router.get("/tarefasUser", auth,  async (req, res) => {
     try {
         const posts = await getAllTarefas(req.token);  
         if (posts.length === 0) {
             return res.status(404).json({ message: "Nenhuma tarefa encontrada" });
         }
         res.status(200).json(posts); 
+        console.log(posts);
     } catch (error) {
         console.error(error);
         res.sendStatus(500); 
