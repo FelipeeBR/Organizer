@@ -71,7 +71,6 @@ router.get("/tarefasUser", auth,  async (req, res) => {
             return res.status(404).json({ message: "Nenhuma tarefa encontrada" });
         }
         res.status(200).json(posts); 
-        console.log(posts);
     } catch (error) {
         console.error(error);
         res.sendStatus(500); 
