@@ -12,13 +12,13 @@ const getTaskStatusDetails = (task) => {
   if (task.status === "COMPLETED") {
     return {
       icon: FaCheckCircle,
-      color: "text-green-500",
+      color: "text-green-700",
       message: `Até o dia ${format(taskDate, "dd/MM/yyyy")}`,
     };
   } else if (taskDate > new Date()) {
     return {
       icon: FaClock,
-      color: "text-blue-500",
+      color: "text-blue-700",
       message: `Até o dia ${format(taskDate, "dd/MM/yyyy")}`,
     };
   } else {
@@ -60,8 +60,8 @@ const Tarefa = ({ task, index }) => {
         className="w-full bg-white rounded-lg shadow-md flex flex-col justify-between border border-slate-300 p-4"
       >
         <p className="font-medium">{task.title}</p>
-        <div className={`flex items-center ${color} gap-2`}>
-          <Icon />
+        <div className={`flex items-center gap-2`}>
+          <Icon className={color} />
           <p className="ml-2">{message}</p>
         </div>
         <div className="mt-4 flex gap-2">

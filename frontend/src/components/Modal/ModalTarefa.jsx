@@ -75,6 +75,7 @@ const ModalTarefa = () => {
                 setValue("description", tarefa?.description || "");
                 setValue("status", tarefa?.status || "");
                 setValue("priority", tarefa?.priority || "");
+                setValue("disciplinaId", tarefa?.disciplinaId || "");
                 setValue("date", tarefa?.date ? format(addDays(new Date(tarefa.date), 1), 'yyyy-MM-dd') : "");
             } catch (error) {
                 console.error("Erro ao buscar tarefa:", error);
