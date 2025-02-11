@@ -42,7 +42,7 @@ const CardDisciplina = ({info}) => {
             </Link>
             <div className="flex flex-col flex-grow">
                 <div className="mt-4 flex gap-2 sm:mt-auto">
-                    <button onClick={() => handleEditDisciplina(id)} className="flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+                    <button onClick={() => handleEditDisciplina(id)} className="flex items-center justify-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
                         <FaEdit className="" />
                     </button>
                     <button onClick={() => handleDeleteDisciplina(id)} className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">

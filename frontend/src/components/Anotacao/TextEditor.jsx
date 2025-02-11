@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { createAnotacao } from "../../features/anotacaoSlice";
 import { toast } from "react-toastify";
-import { FaSave, FaBan } from "react-icons/fa";
+import { FaSave, FaArrowLeft } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
+import '../../App.css';
 
 const TextEditor = () => {
   const [description, setDescription] = useState();
@@ -54,16 +55,16 @@ const TextEditor = () => {
           )}
         </div>
         <div className="bg-white rounded-lg min-h-10">
-          <DefaultEditor value={description} onChange={handleChange}/>
+          <DefaultEditor value={description} onChange={handleChange} className="rsw-ce ul rsw-ce ol"/>
         </div>
         <div className="flex justify-end gap-3">
           <Link to={"/anotacoes"}>
-            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
-              <FaBan />
+            <button className="flex flex-grow mt-4 px-4 py-2 bg-red-500 text-white rounded">
+              <FaArrowLeft className="flex flex-grow m-1"/> Voltar
             </button>
           </Link>
-          <button type="submit" className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
-            <FaSave />
+          <button type="submit" className="flex mt-4 px-4 py-2 bg-green-500 text-white rounded">
+            <FaSave className="flex flex-grow m-1"/> Salvar
           </button>
         </div>
       </form>
