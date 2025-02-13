@@ -73,6 +73,22 @@ async function updateNotificacao(id) {
     }
 };
 
+async function updateNotificacaoApp(id) {
+    try {
+        const notificacao = await prisma.notificacao.update({
+            where: {
+              id: parseInt(id),
+            },
+            data: {
+              agendada: true,
+            },
+        });
+        return notificacao;
+    } catch (error) {
+        return error;
+    }
+}
+
 async function getNotificacoes(token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
@@ -99,4 +115,5 @@ module.exports = {
     verificarNotificacoes,
     updateNotificacao,
     getNotificacoes,
+    updateNotificacaoApp,
 }

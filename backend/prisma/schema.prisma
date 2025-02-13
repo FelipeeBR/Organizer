@@ -84,6 +84,7 @@ model Notificacao {
   descricao   String
   dataEnvio   DateTime @default(now())
   lida        Boolean  @default(false)
+  agendada    Boolean  @default(false)
   userId      Int
   User        Usuario  @relation(fields: [userId], references: [id])
   tarefaId    Int?

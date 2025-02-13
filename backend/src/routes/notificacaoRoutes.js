@@ -1,6 +1,6 @@
 const express = require("express");
 const { auth } = require("../middlewares/auth");
-const { verificarNotificacoes, updateNotificacao, getNotificacoes } = require("../controllers/notificacaoController");
+const { verificarNotificacoes, updateNotificacao, getNotificacoes, updateNotificacaoApp } = require("../controllers/notificacaoController");
 
 const router = express.Router();
 
@@ -31,5 +31,16 @@ router.get('/notificacoes', auth, async (req, res) => {
         res.sendStatus(500);  
     }
 });
+
+router.put('/notificacaoapp/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const notificacao = await updateNotificacaoApp(id);
+        res.status(200).json(notificacao); 
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+})
 
 module.exports = router;
