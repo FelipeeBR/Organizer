@@ -1,6 +1,6 @@
 const express = require("express");
 const { auth } = require("../middlewares/auth");
-const { verificarNotificacoes, updateNotificacao, getNotificacoes, updateNotificacaoApp } = require("../controllers/notificacaoController");
+const { verificarNotificacoes, updateNotificacao, getNotificacoes, salvarToken } = require("../controllers/notificacaoController");
 
 const router = express.Router();
 
@@ -32,15 +32,14 @@ router.get('/notificacoes', auth, async (req, res) => {
     }
 });
 
-router.put('/notificacaoapp/:id', async (req, res) => {
-    const { id } = req.params;
+router.post('/salvar-token', async (req, res) => {
+    const { token } = req.body;
     try {
-        const notificacao = await updateNotificacaoApp(id);
-        res.status(200).json(notificacao); 
+        await salvarToken(token);
+        res.status(200).json({ message: 'Token salvo com sucesso.' });
     } catch (error) {
-        console.error(error);
-        res.sendStatus(500);
+        res.status(500).json({ error: 'Falha ao salvar o token.' });
     }
-})
+});
 
 module.exports = router;
