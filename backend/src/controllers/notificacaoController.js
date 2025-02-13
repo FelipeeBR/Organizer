@@ -59,14 +59,12 @@ async function verificarNotificacoes() {
             tarefaId: tarefa.id,
           },
         });
-  
-        // Obtenha o token do usuário
+
         const user = await prisma.user.findUnique({
           where: { id: tarefa.userId },
         });
   
         if (user && user.pushToken) {
-          // Envie a push notification
           await sendPushNotification(user.pushToken, 'Nova Tarefa', notificacao.descricao);
         }
       }
@@ -87,14 +85,12 @@ async function verificarNotificacoes() {
             agendaId: agenda.id,
           },
         });
-  
-        // Obtenha o token do usuário
+
         const user = await prisma.user.findUnique({
           where: { id: agenda.userId },
         });
   
         if (user && user.pushToken) {
-          // Envie a push notification
           await sendPushNotification(user.pushToken, 'Nova Agenda', notificacao.descricao);
         }
       }
