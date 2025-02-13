@@ -83,8 +83,10 @@ async function updateNotificacaoApp(id) {
               agendada: true,
             },
         });
+        console.log(notificacao);
         return notificacao;
     } catch (error) {
+        console.log(error);
         return error;
     }
 }
