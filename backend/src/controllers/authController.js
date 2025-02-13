@@ -19,7 +19,7 @@ async function login(email, password) {
     }
 
     try {
-        const token = await signToken({ id: user.id, email: user.email }, process.env.JWT_TOKEN, { expiresIn: "7d" });
+        const token = await signToken({ id: user.id, email: user.email }, process.env.JWT_TOKEN, { expiresIn: "365d" });
         return { token };
     } catch {
         return { error: "Internal Error" };
