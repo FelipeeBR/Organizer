@@ -11,7 +11,6 @@ const Desempenho = () => {
         pontuacaoTotal: 0,
         desempenho: "",
     });
-    const [loading, setLoading] = React.useState(false);
     const [ver, setVer] = React.useState(false);
     const handleDesempenho = async () => {
         try {

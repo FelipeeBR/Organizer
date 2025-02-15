@@ -1,4 +1,4 @@
-import { FaHome, FaCheck, FaRegCalendarAlt, FaBookOpen, FaBook, FaUser, FaBell, FaUserGraduate } from "react-icons/fa";
+import { FaHome, FaRegCalendarAlt, FaBookOpen, FaBook, FaBell, FaUserGraduate } from "react-icons/fa";
 
 const links = [
   { id: 1, url: "/", text: "Início", icon: <FaHome /> },
