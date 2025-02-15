@@ -86,7 +86,7 @@ const CardTarefa = ({info}) => {
                     </div> 
                 </div>
             </div>
-            <div className="flex-grow">
+            <div className="flex-grow truncate">
                 <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
                 <p className="text-sm text-gray-600">{description}</p>
             </div>

@@ -35,7 +35,7 @@ const CardDisciplina = ({info}) => {
                 </div>
                 <div className="flex flex-col flex-grow">
                     <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-gray-600 mt-1 truncate">
                         {details}
                     </p>
                 </div>

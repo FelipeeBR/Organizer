@@ -23,7 +23,7 @@ const Calendario = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className='bg-white p-4 rounded-lg mt-4'>
         <FullCalendar
             plugins={[dayGridPlugin]}
             initialView='dayGridMonth'
@@ -33,7 +33,7 @@ const Calendario = () => {
             locale={brLocale}
             timeZone="America/Sao_Paulo"
         />
-</div>
+    </div>  
   )
 }
 

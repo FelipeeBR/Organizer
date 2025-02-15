@@ -30,6 +30,7 @@ const ModalAgenda = () => {
       const parsedUser = JSON.parse(token);
       const token2 = parsedUser.token;
       data.token = token2;
+      data.date = new Date(data.date).toISOString(); 
       if (isModalAgenda) {
         const result = await dispatch(createAgenda({ agendaData: data, token: token2 }));
         if (result.meta.requestStatus === "fulfilled") {
@@ -40,6 +41,7 @@ const ModalAgenda = () => {
           console.error(result);
           toast.error('Erro ao criar');
         }
+        console.log(data);
       } else if (isModalAgendaEdit) {
         const result = await dispatch(updateAgenda({id: editAgendaId, agendaData: data, token: token2 })); 
         if (result.meta.requestStatus === "fulfilled") {

@@ -3,6 +3,7 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import Tarefa from './Tarefa';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTarefas, updateTarefa } from '../features/tarefaSlice';
+import EmptyImg from '../images/emptyBox.png';
 
 const Tarefas = ({ filters }) => {
     const { priority, date } = filters;
@@ -104,7 +105,7 @@ const Tarefas = ({ filters }) => {
                 <DragDropContext onDragEnd={onDragEnd}>
                 {/*Coluna 1*/}
                 <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[600px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4 text-center">Pendente⛔</h1>
+                    <h1 className="text-xl font-bold mb-4">Pendente⛔</h1>
                     <Droppable droppableId="column1" type="list" direction="vertical">
                     {(provided) => (
                         <article
@@ -117,8 +118,13 @@ const Tarefas = ({ filters }) => {
                                     <Tarefa key={task.id} task={task} index={index} />
                                 ))
                                 ) : (
-                                <div className="text-center text-gray-500 italic">
-                                    Nenhuma tarefa
+                                    <div className="flex flex-col text-center items-center justify-center">
+                                    <div className='flex w-20'>
+                                        <img src={EmptyImg} alt="empty" />
+                                    </div>
+                                    <div>
+                                        Nenhuma tarefa
+                                    </div>
                                 </div>
                                 )}
                                 {provided.placeholder}
@@ -129,7 +135,7 @@ const Tarefas = ({ filters }) => {
 
                 {/*Coluna 2*/}
                 <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4 text-center">Fazendo⏳</h1>
+                    <h1 className="text-xl font-bold mb-4">Fazendo⏳</h1>
                     <Droppable droppableId="column2" type="list" direction="vertical">
                     {(provided) => (
                         <article
@@ -142,8 +148,13 @@ const Tarefas = ({ filters }) => {
                                 <Tarefa key={task.id.toString()} task={task} index={index} />
                             ))
                             ) : (
-                            <div className="text-center text-gray-500 italic">
-                                Nenhuma tarefa
+                            <div className="flex flex-col text-center items-center justify-center">
+                                <div className='flex w-20'>
+                                    <img src={EmptyImg} alt="empty" />
+                                </div>
+                                <div>
+                                    Nenhuma tarefa
+                                </div>
                             </div>
                             )}
                             {provided.placeholder}
@@ -154,7 +165,7 @@ const Tarefas = ({ filters }) => {
 
                 {/*Coluna 3*/}
                 <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4 text-center">Concluído✅</h1>
+                    <h1 className="text-xl font-bold mb-4">Concluído✅</h1>
                     <Droppable droppableId="column3" type="list" direction="vertical">
                     {(provided) => (
                         <article
@@ -167,8 +178,13 @@ const Tarefas = ({ filters }) => {
                                 <Tarefa key={task.id} task={task} index={index} />
                             ))
                             ) : (
-                            <div className="text-center text-gray-500 italic">
-                                Nenhuma tarefa
+                            <div className="flex flex-col text-center items-center justify-center">
+                                <div className='flex w-20'>
+                                    <img src={EmptyImg} alt="empty" />
+                                </div>
+                                <div>
+                                    Nenhuma tarefa
+                                </div>
                             </div>
                             )}
                             {provided.placeholder}

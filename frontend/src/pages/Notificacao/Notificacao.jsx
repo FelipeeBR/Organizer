@@ -26,7 +26,7 @@ const Notificacao = () => {
   }, [dispatch])
 
   return (
-    <div>
+    <div className='h-full overflow-y-auto'>
       <Title text={"Notificações"}/>
        <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-1 gap-4 m-4">
         {notificacoes?.map((notificacao) => (
