@@ -7,6 +7,7 @@ const tarefaRoutes = require("./src/routes/tarefaRoutes");
 const anotacaoRoutes = require("./src/routes/anotacaoRoutes");
 const agendaRoutes = require("./src/routes/agendaRoutes");
 const notificacaoRoutes = require("./src/routes/notificacaoRoutes");
+const desempenhoRoutes = require("./src/routes/desempenhoRoutes");
 const cors = require('cors');
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api", tarefaRoutes);
 app.use("/api", anotacaoRoutes);
 app.use("/api", agendaRoutes);
 app.use("/api", notificacaoRoutes);
+app.use("/api", desempenhoRoutes);
 
 app.listen(4000, () => {
     console.log("API funcionando na porta 4000");

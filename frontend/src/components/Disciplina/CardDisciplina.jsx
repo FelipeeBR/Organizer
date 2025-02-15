@@ -6,9 +6,10 @@ import { deleteDisciplina } from '../../features/disciplinaSlice';
 import { useContextApp } from "../../context/AppContext";
 import { Link } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const CardDisciplina = ({info}) => {
-    const { id, name, details } = info;
+    const { id, name, details, dependencia } = info;
     const dispatch = useDispatch();
     const { openClose } = useContextApp();
 
@@ -48,6 +49,7 @@ const CardDisciplina = ({info}) => {
                     <button onClick={() => handleDeleteDisciplina(id)} className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
                         <FaTrash className="" />
                     </button>
+                    {dependencia > 0 && <div className="flex bg-orange-500 text-white px-4 py-2 rounded-lg text-sm"><FaExclamationTriangle className="flex flex-grow m-1"/>Dependência</div>}
                 </div>
             </div>
         </div>

@@ -18,6 +18,7 @@ import NovaAnotacao from './pages/Anotacao/NovaAnotacao/NovaAnotacao';
 import AnotacaoEdit from './pages/Anotacao/AnotacaoEdit';
 import Agenda from './pages/Agenda/Agenda';
 import Notificacao from './pages/Notificacao/Notificacao';
+import Desempenho from './pages/Desempenho/Desempenho';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -58,6 +59,7 @@ function App() {
               <Route path="/anotacao/:id" element={<ProtectedRoute><AnotacaoEdit /></ProtectedRoute>} />
               <Route path="/agenda" element={<ProtectedRoute><Agenda/></ProtectedRoute>} />
               <Route path="/notificacoes" element={<ProtectedRoute><Notificacao/></ProtectedRoute>} />
+              <Route path="/desempenho" element={<ProtectedRoute><Desempenho/></ProtectedRoute>} />
             </Routes>
           </main>
           <ToastContainer position="top-center"/>

@@ -87,7 +87,7 @@ const Title = ({ text }) => {
           <button className="relative w-10 h-10 flex items-center justify-center text-slate-700">
             <IoMdNotifications size={25} />
             {notificacao.length > 0 && (
-              <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 border-2 border-white text-white font-semibold flex items-center justify-center text-xs leading-none">
+              <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 text-white font-semibold flex items-center justify-center text-xs leading-none">
                 {notificacao.length}
               </span>
             )}

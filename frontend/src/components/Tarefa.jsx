@@ -59,7 +59,7 @@ const Tarefa = ({ task, index }) => {
         ref={provided.innerRef}
         className="w-full bg-white rounded-lg shadow-md flex flex-col justify-between border border-slate-300 p-4"
       >
-        <p className="font-medium">{task.title}</p>
+        <p className="font-medium truncate">{task.title}</p>
         <div className={`flex items-center gap-2`}>
           <Icon className={color} />
           <p className="ml-2">{message}</p>
