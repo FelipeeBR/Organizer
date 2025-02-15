@@ -52,10 +52,8 @@ async function getAgendas(token) {
         if(!data) {
             return null;
         }
-        console.log(data);
         return data;
     } catch(error) {
-        console.log("Nome do Erro:", error);
         return error;
     }
 };

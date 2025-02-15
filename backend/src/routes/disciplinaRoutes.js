@@ -6,14 +6,14 @@ const { auth } = require("../middlewares/auth");
 const router = express.Router();
 
 router.post("/disciplina", async (req, res) => {
-    var { title, content, token } = req.body;
+    var { title, content, obrigatoria, dependencia, token } = req.body;
 
     if (!title || !content) {
         return res.sendStatus(400);
     }
 
     try {
-        const post = await createDisciplina(title, content, token); 
+        const post = await createDisciplina(title, content, obrigatoria, dependencia, token); 
         res.status(201).json(post); 
     } catch (error) {
         console.error(error);
@@ -59,10 +59,10 @@ router.delete("/disciplina/:id", auth, async (req, res) => {
 
 router.put("/disciplina/:id", auth, async (req, res) => {
     const { id } = req.params; 
-    const { title, content } = req.body;
+    const { title, content, obrigatoria, dependencia } = req.body;
     
     try {
-        const post = await updateDisciplina(id, title, content); 
+        const post = await updateDisciplina(id, title, content, obrigatoria, dependencia); 
         res.status(200).json(post); 
     } catch (error) {
         console.error(error);

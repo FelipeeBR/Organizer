@@ -29,6 +29,8 @@ model Disciplina {
   id      Int      @id @default(autoincrement())
   name    String
   details String?
+  obrigatoria Int?
+  dependencia Int?
   User    Usuario? @relation(fields: [userId], references: [id])
   userId  Int?
   tarefas Tarefa[]
@@ -60,10 +62,17 @@ enum TaskPriority {
   ALTA
 }
 
+enum AgendaType {
+  TRABALHO
+  PROVA
+  EVENTO
+}
+
 model Agenda {
   id          Int      @id @default(autoincrement())
   description String
   date        DateTime
+  tipo        AgendaType
   User        Usuario  @relation(fields: [userId], references: [id])
   userId      Int
   notificacoes Notificacao[]

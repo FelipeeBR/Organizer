@@ -104,7 +104,7 @@ const Tarefas = ({ filters }) => {
             <div className="flex flex-wrap justify-center gap-5 w-full max-w-7xl">
                 <DragDropContext onDragEnd={onDragEnd}>
                 {/*Coluna 1*/}
-                <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[600px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[600px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Pendente⛔</h1>
                     <Droppable droppableId="column1" type="list" direction="vertical">
                     {(provided) => (
@@ -119,7 +119,7 @@ const Tarefas = ({ filters }) => {
                                 ))
                                 ) : (
                                     <div className="flex flex-col text-center items-center justify-center">
-                                    <div className='flex w-20'>
+                                    <div className='flex w-12'>
                                         <img src={EmptyImg} alt="empty" />
                                     </div>
                                     <div>
@@ -134,7 +134,7 @@ const Tarefas = ({ filters }) => {
                 </section>
 
                 {/*Coluna 2*/}
-                <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Fazendo⏳</h1>
                     <Droppable droppableId="column2" type="list" direction="vertical">
                     {(provided) => (
@@ -149,7 +149,7 @@ const Tarefas = ({ filters }) => {
                             ))
                             ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-20'>
+                                <div className='flex w-12'>
                                     <img src={EmptyImg} alt="empty" />
                                 </div>
                                 <div>
@@ -164,7 +164,7 @@ const Tarefas = ({ filters }) => {
                 </section>
 
                 {/*Coluna 3*/}
-                <section className="bg-gray-100 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Concluído✅</h1>
                     <Droppable droppableId="column3" type="list" direction="vertical">
                     {(provided) => (
@@ -179,7 +179,7 @@ const Tarefas = ({ filters }) => {
                             ))
                             ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-20'>
+                                <div className='flex w-12'>
                                     <img src={EmptyImg} alt="empty" />
                                 </div>
                                 <div>

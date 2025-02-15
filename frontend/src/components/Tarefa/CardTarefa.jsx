@@ -87,8 +87,8 @@ const CardTarefa = ({info}) => {
                 </div>
             </div>
             <div className="flex-grow truncate">
-                <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
-                <p className="text-sm text-gray-600">{description}</p>
+                <h3 className="text-lg font-bold text-gray-800 mb-2 truncate">{title}</h3>
+                <p className="text-sm text-gray-600 truncate">{description}</p>
             </div>
 
             <div className="mt-4 flex gap-2">

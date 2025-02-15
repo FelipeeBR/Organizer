@@ -22,14 +22,16 @@ const ModalDisciplina = () => {
       reset,
   } = useForm({ defaultValues: {
       title: "",
-      content:"" 
-    },});
+      content:"", 
+      obrigatoria:"",
+      dependencia: ""
+  },});
 
     
     const onSubmit = async (data) => {
       const parsedUser = JSON.parse(token);
       const token2 = parsedUser.token;
-      if (isModalDisciplina) {
+      if(isModalDisciplina) {
         const result = await dispatch(registerDisciplina({ ...data, token: token2 }));
         if (result.meta.requestStatus === "fulfilled") {
           openClose("isModalDisciplina");
@@ -41,7 +43,7 @@ const ModalDisciplina = () => {
         }
       } else if (isModalDisciplinaEdit) {
         const result = await dispatch(updateDisciplina({id: editDisciplinaId, disciplinaData: data, token: token2 })); 
-        if (result.meta.requestStatus === "fulfilled") {
+        if(result.meta.requestStatus === "fulfilled") {
           openClose("isModalDisciplinaEdit");
           reset({
             title: result.payload.name,
@@ -65,6 +67,8 @@ const ModalDisciplina = () => {
                   const disciplina = result.payload;
                   setValue("title", disciplina?.name || "");
                   setValue("content", disciplina?.details || "");
+                  setValue("obrigatoria", String(disciplina?.obrigatoria) || "");
+                  setValue("dependencia", String(disciplina?.dependencia) || "");
               } catch (error) {
                   console.error("Erro ao buscar disciplina:", error);
               }
@@ -122,7 +126,6 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
     <div className="my-5">
       <form onSubmit={onSubmit} className="flex flex-col gap-y-4">
         <div>
-          <label className="text-lg text-slate-800">Nome</label>
           <input
             type="text"
             name="title"
@@ -133,7 +136,6 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
           {errors.name && <p className="text-red-500 text-sm">Preencha o nome</p>}
         </div>
         <div>
-          <label className="text-lg text-slate-800">Descrição</label>
           <textarea
             type="text"
             name="content"
@@ -142,6 +144,29 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
             {...register("content")}
             
           ></textarea>
+        </div>
+        <div>
+          <label className="text-slate-800 text-md font-bold">Tipo</label>
+          <select 
+            name="obrigatoria"
+            {...register("obrigatoria")}
+            className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+          >
+            <option value="1">Obrigatória</option>
+            <option value="0">Optativa</option> 
+          </select>
+        </div>
+
+        <div>
+          <label className="text-slate-800 text-md font-bold">Dependência</label>
+          <select 
+            name="dependencia"
+            {...register("dependencia")}
+            className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+          >
+            <option value="1">Sim</option>
+            <option value="0">Não</option> 
+          </select>
         </div>
 
         <div className="flex items-center justify-end">

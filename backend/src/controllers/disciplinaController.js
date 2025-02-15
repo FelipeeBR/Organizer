@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
-async function createDisciplina(title, content, token) {
+async function createDisciplina(title, content, obrigatoria, dependencia, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN); 
         const userId = decoded.id;
@@ -10,6 +10,8 @@ async function createDisciplina(title, content, token) {
             data: {
                 name: title,
                 details: content,
+                obrigatoria: parseInt(obrigatoria),
+                dependencia: parseInt(dependencia),
                 userId: userId
             }
         });
@@ -20,7 +22,7 @@ async function createDisciplina(title, content, token) {
     
 }
 
-async function updateDisciplina(id, title, content) {
+async function updateDisciplina(id, title, content, obrigatoria, dependencia) {
     try {
         const disciplina = await prisma.disciplina.update({
             where: {
@@ -28,7 +30,9 @@ async function updateDisciplina(id, title, content) {
             },
             data: {
                 name: title,
-                details: content
+                details: content,
+                obrigatoria: parseInt(obrigatoria),
+                dependencia: parseInt(dependencia)
             }
         });
         return disciplina;
