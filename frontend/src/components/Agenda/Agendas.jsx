@@ -25,7 +25,7 @@ const Agendas = () => {
   }, [dispatch]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedAgendas = agendas?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const paginatedAgendas = Array.isArray(agendas) ? agendas.slice(startIndex, startIndex + ITEMS_PER_PAGE) : [];
 
   const totalPages = Math.ceil((agendas?.length || 0) / ITEMS_PER_PAGE);
 
