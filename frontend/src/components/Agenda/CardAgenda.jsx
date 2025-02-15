@@ -7,7 +7,7 @@ import { useContextApp } from "../../context/AppContext";
 import { format, addHours } from 'date-fns';
 
 const CardAgenda = ({info}) => {
-    const { id, description, date } = info;
+    const { id, description, date, tipo } = info;
     const dispatch = useDispatch();
     const { openClose } = useContextApp();
 
@@ -26,10 +26,41 @@ const CardAgenda = ({info}) => {
         openClose("isModalAgendaEdit", id);
     };
 
+    const getTipo = (tipo) => {
+        switch (tipo) {
+            case 'TRABALHO':
+            return <div className='flex items-center gap-2'>Trabalho</div>; 
+            case 'PROVA':
+            return <div className='flex items-center gap-2'>Prova</div>; 
+            case 'EVENTO':
+            return <div className='flex items-center gap-2'>Evento</div>; 
+            default:
+            return <div className='flex items-center gap-2'>Evento</div>;
+        }
+    };
+
+    const getColor = (tipo) => {
+        switch (tipo) {
+          case 'TRABALHO':
+            return 'bg-green-500'; 
+          case 'PROVA':
+            return 'bg-red-500'; 
+          case 'EVENTO':
+            return 'bg-blue-500'; 
+          default:
+            return 'bg-gray-500';
+        }
+    };
+
     return (
         <div className='bg-white rounded-lg shadow-md flex flex-col justify-between relative p-4'>
-            <div className="flex flex-col flex-grow">
-                <h3 className="text-sm font-semibold text-gray-800 italic">{format(addHours(new Date(date), 3), "dd/MM/yyyy 'às' HH:mm")}</h3>
+            <div className="flex flex-grow gap-2">
+                <div className={`flex items-center justify-center text-white ${getColor(tipo)} rounded-lg px-2 font-semibold`}>
+                    {getTipo(tipo)}
+                </div>
+                <div>
+                    <h3 className="text-sm font-semibold text-gray-800 italic">{format(addHours(new Date(date), 3), "dd/MM/yyyy 'às' HH:mm")}</h3>
+                </div>
             </div>
             <div className="flex flex-col flex-grow">
                 <h3 className="text-sm font-semibold text-gray-800 italic">{description}</h3>

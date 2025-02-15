@@ -5,13 +5,13 @@ const { createAgenda, updateAgenda, getAgenda, getAgendas, deleteAgenda } = requ
 const router = express.Router();
 
 router.post("/agenda", auth, async (req, res) => {
-    const { description, date, token } = req.body;
+    const { description, date, tipo, token } = req.body;
 
     if(!date|| !description) {
         return res.status(400).json({ message: "Data ou descrição estão em branco." });
     }
     try {
-        const post = await createAgenda(description, date, token);
+        const post = await createAgenda(description, date, tipo, token);
         res.status(201).json(post);
     } catch (error) {
         console.error(error);
@@ -45,9 +45,9 @@ router.get("/agenda/:id", auth, async (req, res) => {
 
 router.put("/agenda/:id", auth, async (req, res) => {
     const { id } = req.params; 
-    const { description, date } = req.body;
+    const { description, date, tipo } = req.body;
     try {
-        const post = await updateAgenda(id, description, date);
+        const post = await updateAgenda(id, description, date, tipo);
         res.status(200).json(post); 
     } catch (error) {
         console.error(error);

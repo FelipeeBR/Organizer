@@ -32,9 +32,13 @@ const Agendas = () => {
   return (
     <div className="m-4">
       <div className="grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-1 gap-4">
-        {paginatedAgendas?.map((agenda) => (
-          <CardAgenda key={agenda.id} info={agenda} />
-        ))}
+        {agendas && agendas.length > 0 ? (
+          paginatedAgendas?.map((agenda) => (
+            <CardAgenda key={agenda.id} info={agenda} />
+          ))
+        ): (
+          <p className="text-center text-slate-800 font-semibold">Nenhuma agenda encontrada</p>
+        )}
       </div>
       <div className="flex justify-center mt-4 gap-2">
         <button

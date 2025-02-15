@@ -22,6 +22,7 @@ const ModalAgenda = () => {
       reset,
   } = useForm({ defaultValues: {
       description: "",
+      tipo: "EVENTO",
       date: new Date(), 
     },});
 
@@ -68,6 +69,7 @@ const ModalAgenda = () => {
                   const agenda = result.payload;
                   setValue("description", agenda?.description || "");
                   setValue("date", agenda?.date || "");
+                  setValue("tipo", agenda?.tipo || "");
               } catch (error) {
                   console.error("Erro ao buscar agenda:", error);
               }
@@ -125,20 +127,31 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
     <div className="my-5">
       <form onSubmit={onSubmit} className="flex flex-col gap-y-4">
         <div>
-          <label className="text-lg text-slate-800">Descrição</label>
           <textarea
             type="text"
             name="description"
             className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
             placeholder="Descrição"
-            {...register("description", { required: true, maxLength: 30 })}
+            {...register("description", { required: true, maxLength: 50 })}
             
           ></textarea>
           {errors.description && <p className="text-red-500 text-sm">Preencha a descrição</p>}
-          {errors.description?.type === "maxLength" && <p className="text-red-500 text-sm">Limite de 30 caracteres</p>}
+          {errors.description?.type === "maxLength" && <p className="text-red-500 text-sm">Limite de 50 caracteres</p>}
         </div>
         <div>
-            <label className="text-lg text-slate-800">Data</label>
+          <label className="text-slate-800 text-md font-bold">Tipo</label>
+          <select
+            name="tipo"
+            {...register("tipo")}
+            className="w-full h-10 px-3 rounded-lg font-medium bg-gray-100 border border-gray-300 text-sm placeholder-gray-500 focus:outline-none focus:border-gray-400 focus:bg-white"
+          >
+            <option value="TRABALHO">Trabalho</option>
+            <option value="PROVA">Prova</option>
+            <option value="EVENTO">Evento</option>
+          </select>
+        </div>
+        <div>
+            <label className="text-slate-800 text-md font-bold">Data</label>
             <input {...register("date")} type="datetime-local" className="w-full h-10 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"/>
         </div>
 

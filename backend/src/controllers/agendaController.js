@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
-async function createAgenda(description, date, token) {
+async function createAgenda(description, date, tipo, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decoded.id;
@@ -12,6 +12,7 @@ async function createAgenda(description, date, token) {
             data: {
                 description: description,
                 date: new Date(dateBrazil),
+                tipo: tipo,
                 userId: userId,
             }
         });
@@ -21,7 +22,7 @@ async function createAgenda(description, date, token) {
     }
 };
 
-async function updateAgenda(id, description, date) {
+async function updateAgenda(id, description, tipo, date) {
     try {
         let dateBrazil = new Date(date);
         dateBrazil.setHours(dateBrazil.getHours() - 3);
@@ -32,6 +33,7 @@ async function updateAgenda(id, description, date) {
             data: {
                 description: description,
                 date: new Date(dateBrazil),
+                tipo: tipo
             }
         });
         return data;
