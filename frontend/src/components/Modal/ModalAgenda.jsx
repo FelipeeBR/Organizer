@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { createAgenda, updateAgenda, getAgenda } from "../../features/agendaSlice";
 import { toast } from "react-toastify";
+import { format, addHours } from "date-fns";
 
 
 const ModalAgenda = () => {
@@ -68,7 +69,7 @@ const ModalAgenda = () => {
                   const result = await dispatch(getAgenda({id: editAgendaId, token: token2}));
                   const agenda = result.payload;
                   setValue("description", agenda?.description || "");
-                  setValue("date", agenda?.date || "");
+                  setValue("date", format(addHours(agenda?.date, 3), "yyyy-MM-dd'T'HH:mm") || "");
                   setValue("tipo", agenda?.tipo || "");
               } catch (error) {
                   console.error("Erro ao buscar agenda:", error);

@@ -53,7 +53,7 @@ const CardAgenda = ({info}) => {
     };
 
     return (
-        <div className='bg-white rounded-lg shadow-md flex flex-col justify-between relative p-4'>
+        <div className='bg-white rounded-lg shadow-md flex flex-col justify-between relative p-4 gap-2'>
             <div className="flex flex-grow gap-2">
                 <div className={`flex items-center justify-center text-white ${getColor(tipo)} rounded-lg px-2 font-semibold`}>
                     {getTipo(tipo)}
