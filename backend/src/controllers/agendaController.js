@@ -16,15 +16,13 @@ async function createAgenda(description, date, tipo, token) {
                 userId: userId,
             }
         });
-        console.log("Agenda criada: ", data);
         return data;
     } catch(error) {
-        console.log("Ocorreu um erro: ",error);
         return error;
     }
 };
 
-async function updateAgenda(id, description, tipo, date) {
+async function updateAgenda(id, description, date, tipo) {
     try {
         let dateBrazil = new Date(date);
         dateBrazil.setHours(dateBrazil.getHours() - 3);
@@ -38,10 +36,8 @@ async function updateAgenda(id, description, tipo, date) {
                 tipo: tipo
             }
         });
-        console.log("Agenda atualizada: ", data)
         return data;
     } catch(error) {
-        console.log("Ocorreu um erro: ",error);
         return error;
     }
 };
