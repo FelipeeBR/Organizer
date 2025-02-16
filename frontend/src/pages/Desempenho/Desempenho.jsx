@@ -15,7 +15,6 @@ const Desempenho = () => {
         tarefasPendentesCount: 0,
         tarefasConcluidasRecentemente: 0,
         tarefasPendentes: [],
-        tarefasPendentesCount: 0,
     });
     const [ver, setVer] = React.useState(false);
     const handleDesempenho = async () => {
