@@ -118,8 +118,8 @@ const Tarefas = ({ filters }) => {
                                     <Tarefa key={task.id} task={task} index={index} />
                                 ))
                                 ) : (
-                                    <div className="flex flex-col text-center items-center justify-center">
-                                    <div className='flex w-12'>
+                                <div className="flex flex-col text-center items-center justify-center">
+                                    <div className='flex w-10'>
                                         <img src={EmptyImg} alt="empty" />
                                     </div>
                                     <div>
@@ -149,7 +149,7 @@ const Tarefas = ({ filters }) => {
                             ))
                             ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-12'>
+                                <div className='flex w-10'>
                                     <img src={EmptyImg} alt="empty" />
                                 </div>
                                 <div>
@@ -179,7 +179,7 @@ const Tarefas = ({ filters }) => {
                             ))
                             ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-12'>
+                                <div className='flex w-10'>
                                     <img src={EmptyImg} alt="empty" />
                                 </div>
                                 <div>
