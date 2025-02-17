@@ -37,11 +37,16 @@ async function verificarNotificacoes() {
         },
     });
 
+    const agora = new Date();
+    const cincoMinutos = new Date(agora.getTime() - 5 * 60 * 1000);
+
     const agendas = await prisma.agenda.findMany({
         where: {
             date: {
-                lte: new Date()
-            },
+                gte: cincoMinutos,
+                lte: agora        
+            }
+
         },
         take: 100,
     });
