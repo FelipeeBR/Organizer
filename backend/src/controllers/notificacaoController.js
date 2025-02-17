@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const cron = require('node-cron');
 
 // a cada 5 minuto verifica notificações
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/2 * * * *', async () => {
     await verificarNotificacoes();
 });
 
@@ -31,8 +31,7 @@ async function verificarNotificacoes() {
     const tarefas = await prisma.tarefa.findMany({
         where: {
             date: { 
-                gte: new Date(new Date().setDate(new Date().getDate() + 1)),
-                lt: new Date(new Date().setDate(new Date().getDate() + 2)) 
+                lte: new Date(),
             }, 
             status: { not: 'COMPLETED' } 
         },
@@ -41,8 +40,7 @@ async function verificarNotificacoes() {
     const agendas = await prisma.agenda.findMany({
         where: {
             date: {
-                lte: new Date(),
-                gte: new Date(new Date().setHours(new Date().getHours() + 3)),
+                lte: new Date()
             },
         },
         take: 100,
