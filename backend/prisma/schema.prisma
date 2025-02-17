@@ -18,6 +18,7 @@ model Usuario {
   name        String?
   email       String       @unique
   password    String
+  expoPushToken   String?
   disciplinas Disciplina[]
   agenda      Agenda[]
   anotacao    Anotacao[]
