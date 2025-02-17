@@ -2,11 +2,18 @@ const { PrismaClient } = require("@prisma/client");
 const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
-async function enviarNotificacaoExpo(pushToken, mensagem, title) {
+const cron = require('node-cron');
+
+// a cada 5 minuto verifica notificações
+cron.schedule('*/5 * * * *', async () => {
+    await verificarNotificacoes();
+});
+
+async function enviarNotificacaoExpo(pushToken, mensagem) {
     const message = {
         to: pushToken,
         sound: 'default',
-        title: title,
+        title: "Notificação",
         body: mensagem,
     };
 
@@ -20,72 +27,25 @@ async function enviarNotificacaoExpo(pushToken, mensagem, title) {
     });
 }
 
-/*async function verificarNotificacoes() {
-    const tarefas = await prisma.tarefa.findMany({
-        where: {
-            date: {
-                lte: new Date(),
-            },
-            status: { not: 'COMPLETED' },
-        },
-    });
-
-    const agendas = await prisma.agenda.findMany({
-        where: {
-            date: {
-                lte: new Date(),
-            },
-        },
-    });
-
-    for (const tarefa of tarefas) {
-        const existeNotificacao = await prisma.notificacao.findFirst({
-            where: {
-                tarefaId: tarefa.id,
-            },
-        });
-
-        if (!existeNotificacao) {
-            await prisma.notificacao.create({
-                data: {
-                    descricao: `Tarefa: ${tarefa.title} - ${tarefa.description}`,
-                    userId: tarefa.userId,
-                    tarefaId: tarefa.id,
-                },
-            });
-        }
-    }
-
-    for (const agenda of agendas) {
-        const existeNotificacao = await prisma.notificacao.findFirst({
-            where: {
-                agendaId: agenda.id,
-            },
-        });
-
-        if (!existeNotificacao) {
-            await prisma.notificacao.create({
-                data: {
-                    descricao: `Agenda: ${agenda.description}`,
-                    userId: agenda.userId,
-                    agendaId: agenda.id,
-                },
-            });
-        }
-    }
-}*/
-
 async function verificarNotificacoes() {
     const tarefas = await prisma.tarefa.findMany({
-        where: { date: { lte: new Date() }, status: { not: 'COMPLETED' } },
+        where: {
+            date: { 
+                gte: new Date(new Date().setDate(new Date().getDate() + 1)),
+                lt: new Date(new Date().setDate(new Date().getDate() + 2)) 
+            }, 
+            status: { not: 'COMPLETED' } 
+        },
     });
 
     const agendas = await prisma.agenda.findMany({
         where: {
             date: {
                 lte: new Date(),
+                gte: new Date(new Date().setHours(new Date().getHours() + 3)),
             },
         },
+        take: 100,
     });
 
     for(const tarefa of tarefas) {
@@ -96,12 +56,12 @@ async function verificarNotificacoes() {
         if(!existeNotificacao) {
             const user = await prisma.usuario.findUnique({ where: { id: tarefa.userId } });
             if(user?.expoPushToken) {
-                await enviarNotificacaoExpo(user.expoPushToken, `Tarefa: ${tarefa.title} - ${tarefa.description}`, tarefa.title);
+                await enviarNotificacaoExpo(user.expoPushToken, `Tarefa: ${tarefa.title}`);
             }
 
             await prisma.notificacao.create({
                 data: {
-                    descricao: `Tarefa: ${tarefa.title} - ${tarefa.description}`,
+                    descricao: `Tarefa: ${tarefa.title}`,
                     userId: tarefa.userId,
                     tarefaId: tarefa.id,
                 },
@@ -119,7 +79,7 @@ async function verificarNotificacoes() {
         if(!existeNotificacao) {
             const user = await prisma.usuario.findUnique({ where: { id: agenda.userId } });
             if(user?.expoPushToken) {
-                await enviarNotificacaoExpo(user.expoPushToken, `Agenda: ${agenda.title} - ${agenda.description}`, agenda.title);
+                await enviarNotificacaoExpo(user.expoPushToken, `Agenda: ${agenda.description}`);
             }
 
             await prisma.notificacao.create({

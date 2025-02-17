@@ -4,7 +4,7 @@ const { verificarNotificacoes, updateNotificacao, getNotificacoes, salvarToken }
 
 const router = express.Router();
 
-router.post('/notificacoes/verificar', auth, async (req, res) => {
+router.post('/notificacoes/verificar', async (req, res) => {
     await verificarNotificacoes();
     res.json({ message: 'Notificações verificadas e criadas' });
 });
