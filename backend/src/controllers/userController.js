@@ -44,9 +44,32 @@ async function getUserName(token) {
     }
 }
 
+async function getUser(token) {
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+        const userId = decoded.id;
+        const user = await prisma.usuario.findUnique({
+            where: { id: userId },
+        });
+        if (!user) {
+            throw new Error("Usuário não encontrado");
+        }
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            expoPushToken: user.expoPushToken
+        };
+    } catch (error) {
+        console.error("Erro ao verificar token ou buscar usuário:", error.message);
+        throw new Error("Token inválido ou erro ao buscar usuário");
+    }
+}
+
 module.exports = {
     isValidEmail,
     isValidPassword,
     createUser,
     getUserName,
+    getUser,
 };

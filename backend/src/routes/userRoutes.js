@@ -1,6 +1,6 @@
 const express = require("express");
 const rateLimit = require("express-rate-limit");
-const { isValidEmail, isValidPassword, createUser, getUserName } = require("../controllers/userController");
+const { isValidEmail, isValidPassword, createUser, getUserName, getUser } = require("../controllers/userController");
 
 const router = express.Router();
 const registerLimiter = rateLimit({
@@ -42,6 +42,21 @@ router.get("/user", async (req, res) => {
     const token = authHeader.split(' ')[1];
     try {
         const user = await getUserName(token);
+        return res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao obter usuário" });
+    }
+});
+
+router.get("/usuario", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).json({ error: "Token não fornecido" });
+    }
+    
+    const token = authHeader.split(' ')[1];
+    try {
+        const user = await getUser(token);
         return res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: "Erro ao obter usuário" });
