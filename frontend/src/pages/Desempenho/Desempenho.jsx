@@ -9,8 +9,8 @@ const API = process.env.REACT_APP_API_URL;
 
 const Desempenho = () => {
     const [valores, setValores] = React.useState({
-        aproveitamento: 0,
-        recomendacao: "",
+        aproveitamento: null,
+        recomendacao: null,
         tarefasCompletadasCount: 0,
         tarefasPendentesCount: 0,
         tarefasConcluidasRecentemente: 0,
@@ -45,13 +45,14 @@ const Desempenho = () => {
             <div className="flex justify-center mb-6">
                 <button
                     onClick={handleDesempenho}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition duration-300"
+                    className="flex bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300"
                 >
+                    <FaChartLine className="mr-2" color='#fff' size={20}/>
                     Mostrar meu desempenho
                 </button>
             </div>
 
-            {valores.aproveitamento > 0 && (
+            {valores.aproveitamento !== null && (
                 <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
                     <div className="flex items-center space-x-4 border-b pb-4">
                         <FaChartLine className="text-4xl text-gray-800" />
@@ -109,7 +110,7 @@ const Desempenho = () => {
                 </div>
             )}
 
-            {valores.aproveitamento === 0 && ver && (
+            {valores.aproveitamento === null && ver && (
                 <div className="bg-white rounded-xl shadow-lg p-6 text-center">
                     <p className="text-lg font-semibold text-gray-800">Não foi possível calcular o desempenho</p>
                 </div>
