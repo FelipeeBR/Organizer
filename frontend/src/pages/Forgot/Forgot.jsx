@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import vectorLogin from '../../images/vector-login.png';
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/authSlice';
-
-const Login = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.auth);
+const API = process.env.REACT_APP_API_URL;
+const Forgot = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const {
         register,
@@ -18,19 +15,22 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-    function viewSenha(){
-        setShowPassword(!showPassword);
-    }
-
     const onSubmit = async (data) => {
-        const result = await dispatch(loginUser(data)); 
-        if(result.meta.requestStatus === "fulfilled") {
-            navigate('/'); 
-        } else {
-            console.error(result.message); 
+        setLoading(true);
+        try {
+            const response = await axios.post(`${API}/email`, data,  {});
+            setLoading(false);
+            if(response.status === 200) {
+                navigate('/login');
+            }
+            return response.data; 
+        } catch (error) {
+            setError(error.response.data.message);
+            setLoading(false);
+            return null;
         }
     }
-     
+
     return (
         <div classNameName=''>
             <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -59,40 +59,14 @@ const Login = () => {
                                         {errors.email && errors.email.type === "pattern" && (
                                             <p className="text-red-600 text-sm">E-mail inválido</p>
                                         )}
-
-                                        <div className="flex items-center gap-2 rounded relative">
-                                            <input
-                                                className="w-full px-8 py-4 h-10 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                                                type={showPassword ? "text" : "password"}
-                                                placeholder="Senha"
-                                                {...register("password", { required: true })}
-                                            />
-                                            <span 
-                                                className="absolute right-4 cursor-pointer text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out"
-                                                onClick={viewSenha}
-                                            >
-                                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
-                                            </span>
-                                        </div>
-
-                                        {errors.password && errors.password.type === "required" && (
-                                            <p className="text-red-600 text-sm">Senha não pode ficar em branco</p>
-                                        )}
-                                        
                                         <button type="submit" disabled={loading}
                                             className="mt-5 h-10 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                             <span className="ml-3">
-                                                {loading ? 'Carregando...' : 'Entrar'}
+                                                {loading ? 'Carregando...' : 'Enviar Senha'}
                                             </span>
                                         </button>
                                     </form>
-                                    {error && <p className="text-red-600 text-sm text-center">{error.error || 'Ocorreu um erro ao fazer login'}</p>}
-                                </div>
-                                <div className='flex items-center justify-center mt-3'>
-                                    <span>Esqueceu sua senha? <Link to="/recuperar-senha" className='text-blue-500 underline'>Recuperar agora</Link></span>
-                                </div>
-                                <div className='flex items-center justify-center mt-3'>
-                                    <span>Não possui uma conta? <Link to="/register" className='text-blue-500 underline'>Cadastre-se</Link></span>
+                                    {error.length > 0 && <p className="text-red-600 text-sm text-center">{error}</p>}
                                 </div>
                             </div>
                         </div>
@@ -105,7 +79,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Login;
+export default Forgot

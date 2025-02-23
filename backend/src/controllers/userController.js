@@ -21,7 +21,8 @@ async function createUser(name, email, password) {
         data: {
             name: name,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            forgot:password,
         }
     });
     return user;

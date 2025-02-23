@@ -14,45 +14,46 @@ datasource db {
 }
 
 model Usuario {
-  id          Int          @id @default(autoincrement())
-  name        String?
-  email       String       @unique
-  password    String
-  expoPushToken   String?
-  disciplinas Disciplina[]
-  agenda      Agenda[]
-  anotacao    Anotacao[]
-  tarefa      Tarefa[]
-  notificao Notificacao[]
+  id            Int           @id @default(autoincrement())
+  name          String?
+  email         String        @unique
+  password      String
+  expoPushToken String?
+  forgot        String?
+  disciplinas   Disciplina[]
+  agenda        Agenda[]
+  anotacao      Anotacao[]
+  tarefa        Tarefa[]
+  notificao     Notificacao[]
 }
 
 model Disciplina {
-  id      Int      @id @default(autoincrement())
-  name    String
-  details String?
+  id          Int      @id @default(autoincrement())
+  name        String
+  details     String?
   obrigatoria Int?
   dependencia Int?
-  User    Usuario? @relation(fields: [userId], references: [id])
-  userId  Int?
-  tarefas Tarefa[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  User        Usuario? @relation(fields: [userId], references: [id])
+  userId      Int?
+  tarefas     Tarefa[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Tarefa {
-  id           Int        @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   title        String
   description  String
   date         DateTime
   status       TaskStatus
   priority     TaskPriority
   disciplinaId Int?
-  Disciplina   Disciplina? @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
-  userId  Int?
-  User    Usuario? @relation(fields: [userId], references: [id])
-  notificacoes  Notificacao[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Disciplina   Disciplina?   @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
+  userId       Int?
+  User         Usuario?      @relation(fields: [userId], references: [id])
+  notificacoes Notificacao[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 enum TaskStatus {
@@ -74,15 +75,15 @@ enum AgendaType {
 }
 
 model Agenda {
-  id          Int      @id @default(autoincrement())
-  description String
-  date        DateTime
-  tipo        AgendaType
-  User        Usuario  @relation(fields: [userId], references: [id])
-  userId      Int
+  id           Int           @id @default(autoincrement())
+  description  String
+  date         DateTime
+  tipo         AgendaType
+  User         Usuario       @relation(fields: [userId], references: [id])
+  userId       Int
   notificacoes Notificacao[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Anotacao {
@@ -96,15 +97,15 @@ model Anotacao {
 }
 
 model Notificacao {
-  id          Int      @id @default(autoincrement())
-  descricao   String
-  dataEnvio   DateTime @default(now())
-  lida        Boolean  @default(false)
-  agendada    Boolean  @default(false)
-  userId      Int
-  User        Usuario  @relation(fields: [userId], references: [id])
-  tarefaId    Int?
-  Tarefa      Tarefa? @relation(fields: [tarefaId], references: [id], onDelete: Cascade)
-  agendaId    Int?
-  Agenda      Agenda? @relation(fields: [agendaId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  descricao String
+  dataEnvio DateTime @default(now())
+  lida      Boolean  @default(false)
+  agendada  Boolean  @default(false)
+  userId    Int
+  User      Usuario  @relation(fields: [userId], references: [id])
+  tarefaId  Int?
+  Tarefa    Tarefa?  @relation(fields: [tarefaId], references: [id], onDelete: Cascade)
+  agendaId  Int?
+  Agenda    Agenda?  @relation(fields: [agendaId], references: [id], onDelete: Cascade)
 }

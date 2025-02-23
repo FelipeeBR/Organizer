@@ -19,6 +19,7 @@ import AnotacaoEdit from './pages/Anotacao/AnotacaoEdit';
 import Agenda from './pages/Agenda/Agenda';
 import Notificacao from './pages/Notificacao/Notificacao';
 import Desempenho from './pages/Desempenho/Desempenho';
+import Forgot from './pages/Forgot/Forgot';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -29,7 +30,7 @@ function App() {
     dispatch(checkToken());
   }, [dispatch]);
 
-  const noMainLayoutRoutes = ["/login", "/register"];
+  const noMainLayoutRoutes = ["/login", "/register", '/recuperar-senha'];
   const isMainLayout = !noMainLayoutRoutes.includes(location.pathname);
 
   return (
@@ -68,6 +69,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/recuperar-senha" element={<Forgot />} />
         </Routes>
       )}
     </>
