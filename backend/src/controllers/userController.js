@@ -33,7 +33,7 @@ async function getUserName(token) {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decoded.id;
         const user = await prisma.usuario.findUnique({
-            where: { id: userId },
+            where: { id: parseInt(userId) },
         });
         if (!user) {
             throw new Error("Usuário não encontrado");
@@ -50,7 +50,7 @@ async function getUser(token) {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decoded.id;
         const user = await prisma.usuario.findUnique({
-            where: { id: userId },
+            where: { id: parseInt(userId) },
         });
         if (!user) {
             throw new Error("Usuário não encontrado");
