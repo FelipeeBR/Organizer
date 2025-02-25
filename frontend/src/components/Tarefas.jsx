@@ -101,93 +101,69 @@ const Tarefas = ({ filters }) => {
 
     return (
         <div className="w-full h-screen flex flex-col items-center px-4 pt-5">
-            <div className="flex flex-wrap justify-center gap-5 w-full max-w-7xl">
+            <div className="flex flex-wrap sm:flex-nowrap justify-center gap-5 w-full max-w-7xl">
                 <DragDropContext onDragEnd={onDragEnd}>
                 {/*Coluna 1*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[600px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Pendente⛔</h1>
                     <Droppable droppableId="column1" type="list" direction="vertical">
                     {(provided) => (
-                        <article
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className="space-y-2 min-h-[50px]"
-                            >
-                                {column1Tasks.length > 0 ? (
-                                column1Tasks.map((task, index) => (
-                                    <Tarefa key={task.id} task={task} index={index} />
-                                ))
-                                ) : (
-                                <div className="flex flex-col text-center items-center justify-center">
-                                    <div className='flex w-10'>
-                                        <img src={EmptyImg} alt="empty" />
-                                    </div>
-                                    <div>
-                                        Nenhuma tarefa
-                                    </div>
-                                </div>
-                                )}
-                                {provided.placeholder}
+                        <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">
+                        {column1Tasks.length > 0 ? (
+                            column1Tasks.map((task, index) => <Tarefa key={task.id} task={task} index={index} />)
+                        ) : (
+                            <div className="flex flex-col text-center items-center justify-center">
+                            <div className="flex w-10">
+                                <img src={EmptyImg} alt="empty" />
+                            </div>
+                            <div>Nenhuma tarefa</div>
+                            </div>
+                        )}
+                        {provided.placeholder}
                         </article>
                     )}
                     </Droppable>
                 </section>
 
                 {/*Coluna 2*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Fazendo⏳</h1>
                     <Droppable droppableId="column2" type="list" direction="vertical">
                     {(provided) => (
-                        <article
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className="space-y-2 min-h-[50px]"
-                        >
-                            {column2Tasks.length > 0 ? (
-                            column2Tasks.map((task, index) => (
-                                <Tarefa key={task.id.toString()} task={task} index={index} />
-                            ))
-                            ) : (
+                        <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">
+                        {column2Tasks.length > 0 ? (
+                            column2Tasks.map((task, index) => <Tarefa key={task.id.toString()} task={task} index={index} />)
+                        ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-10'>
-                                    <img src={EmptyImg} alt="empty" />
-                                </div>
-                                <div>
-                                    Nenhuma tarefa
-                                </div>
+                            <div className="flex w-10">
+                                <img src={EmptyImg} alt="empty" />
                             </div>
-                            )}
-                            {provided.placeholder}
+                            <div>Nenhuma tarefa</div>
+                            </div>
+                        )}
+                        {provided.placeholder}
                         </article>
                     )}
                     </Droppable>
                 </section>
 
                 {/*Coluna 3*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-[300px] md:w-[400px] flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
                     <h1 className="text-xl font-bold mb-4">Concluído✅</h1>
                     <Droppable droppableId="column3" type="list" direction="vertical">
                     {(provided) => (
-                        <article
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className="space-y-2 min-h-[50px]"
-                        >
-                            {column3Tasks.length > 0 ? (
-                            column3Tasks.map((task, index) => (
-                                <Tarefa key={task.id} task={task} index={index} />
-                            ))
-                            ) : (
+                        <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">
+                        {column3Tasks.length > 0 ? (
+                            column3Tasks.map((task, index) => <Tarefa key={task.id} task={task} index={index} />)
+                        ) : (
                             <div className="flex flex-col text-center items-center justify-center">
-                                <div className='flex w-10'>
-                                    <img src={EmptyImg} alt="empty" />
-                                </div>
-                                <div>
-                                    Nenhuma tarefa
-                                </div>
+                            <div className="flex w-10">
+                                <img src={EmptyImg} alt="empty" />
                             </div>
-                            )}
-                            {provided.placeholder}
+                            <div>Nenhuma tarefa</div>
+                            </div>
+                        )}
+                        {provided.placeholder}
                         </article>
                     )}
                     </Droppable>
@@ -195,7 +171,6 @@ const Tarefas = ({ filters }) => {
                 </DragDropContext>
             </div>
         </div>
-
     )
 }
 

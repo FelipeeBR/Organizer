@@ -80,21 +80,6 @@ async function avaliarDesempenho(token) {
             recomendacao = "Você precisa focar mais nas suas tarefas!";
         }
 
-        //console.log(`📊 Aproveitamento: ${aproveitamento}%`);
-        //console.log(`📌 Tarefas pendentes: ${tarefasPendentesCount}`);
-        //console.log(`✅ Tarefas finalizadas: ${tarefasCompletadasCount}`);
-        //console.log(`⏳ Tarefas concluídas nos últimos 7 dias: ${tarefasConcluidasRecentemente}`);
-        //console.log(`📝 Recomendação: ${recomendacao}`);
-
-        /*if(tarefasPendentes.length > 0) {
-            console.log("\n🔝 Tarefas Prioritárias:");
-            tarefasPendentes.forEach((tarefa, index) => {
-                console.log(`${index + 1}. 📅 ${tarefa.date} ${tarefa.title} | 🔥 Prioridade: ${tarefa.priority}`);
-            });
-        } else {
-            console.log("\n🎉 Você não tem tarefas pendentes! Aproveite seu tempo.");
-        }*/
-
         return {
             aproveitamento,
             recomendacao,
