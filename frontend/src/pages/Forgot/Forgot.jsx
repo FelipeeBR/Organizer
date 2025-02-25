@@ -42,7 +42,7 @@ const Forgot = () => {
                         </div>
                         <div className="mt-12 flex flex-col items-center">
                             <h1 className="text-lg xl:text-2xl font-bold">
-                                Login
+                                Recuperar Senha
                             </h1>
                             <div className="w-full flex-1 mt-8">
                                 <div className="mx-auto max-w-xs">
