@@ -20,7 +20,7 @@ async function createUser(name, email, password) {
     const user = await prisma.usuario.create({
         data: {
             name: name,
-            email: email,
+            email: email.toLowerCase(),
             password: hashedPassword,
             forgot:password,
         }
