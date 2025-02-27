@@ -20,6 +20,8 @@ import Agenda from './pages/Agenda/Agenda';
 import Notificacao from './pages/Notificacao/Notificacao';
 import Desempenho from './pages/Desempenho/Desempenho';
 import Forgot from './pages/Forgot/Forgot';
+import Download from './pages/Download/Download';
+import PublicRoute from './PublicRoute';
 
 function App() {
   const { isSidebar, openClose } = useContextApp();
@@ -30,7 +32,7 @@ function App() {
     dispatch(checkToken());
   }, [dispatch]);
 
-  const noMainLayoutRoutes = ["/login", "/register", '/recuperar-senha'];
+  const noMainLayoutRoutes = ["/login", "/register", '/recuperar-senha', '/download'];
   const isMainLayout = !noMainLayoutRoutes.includes(location.pathname);
 
   return (
@@ -67,9 +69,10 @@ function App() {
         </div>
       ) : (
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/recuperar-senha" element={<Forgot />} />
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+          <Route path="/recuperar-senha" element={<PublicRoute><Forgot /></PublicRoute>} />
+          <Route path="/download" element={<Download />} />
         </Routes>
       )}
     </>

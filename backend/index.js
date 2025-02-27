@@ -12,6 +12,9 @@ const emailRoutes = require("./src/routes/emailRoutes");
 const cors = require('cors');
 
 const app = express();
+
+const path = require('path');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -42,6 +45,7 @@ app.use("/api", agendaRoutes);
 app.use("/api", notificacaoRoutes);
 app.use("/api", desempenhoRoutes);
 app.use("/api", emailRoutes);
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.listen(4000, () => {
     console.log("API funcionando na porta 4000");
