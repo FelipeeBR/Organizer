@@ -20,9 +20,9 @@ const Tarefas = ({ filters }) => {
     useEffect(() => {
         const filteredTasks = tarefas.filter((task) => {
             const taskDate = new Date(task.date).toISOString().split('T')[0];
-            //console.log({ taskPriority: task.priority, taskDate, selectedPriority: priority, selectedDate: date });
-            const hasPriority = priority === 'all' || task.priority === priority;
+            const hasPriority = priority === '' || task.priority === priority;
             const hasDate = date === '' || taskDate === date;
+    
             return hasPriority && hasDate;
         });
         setListTarefas(filteredTasks);     
