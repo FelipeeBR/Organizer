@@ -72,6 +72,9 @@ enum AgendaType {
   TRABALHO
   PROVA
   EVENTO
+  REUNIAO
+  AULA
+  IMPORTANTE
 }
 
 model Agenda {
