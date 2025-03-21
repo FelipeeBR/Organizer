@@ -21,6 +21,7 @@ import Notificacao from './pages/Notificacao/Notificacao';
 import Desempenho from './pages/Desempenho/Desempenho';
 import Forgot from './pages/Forgot/Forgot';
 import Download from './pages/Download/Download';
+import Ajuda from './pages/Ajuda/Ajuda';
 import PublicRoute from './PublicRoute';
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
               <Route path="/agenda" element={<ProtectedRoute><Agenda/></ProtectedRoute>} />
               <Route path="/notificacoes" element={<ProtectedRoute><Notificacao/></ProtectedRoute>} />
               <Route path="/desempenho" element={<ProtectedRoute><Desempenho/></ProtectedRoute>} />
+              <Route path="/ajuda" element={<ProtectedRoute><Ajuda/></ProtectedRoute>} />
             </Routes>
           </main>
           <ToastContainer position="top-center"/>

@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaSignOutAlt } from "react-icons/fa";
+import { FaArrowLeft, FaSignOutAlt, FaQuestion } from "react-icons/fa";
 import links from "../data";
 import { Link, useLocation } from "react-router-dom";
 import { useContextApp } from "../context/AppContext";
@@ -62,6 +62,12 @@ const Sidebar = () => {
           <div className="">
             <h4 className="text-slate-100 text-xl font-medium">{name}</h4>
           </div>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Link to="/ajuda">
+            <FaQuestion className="text-2xl text-slate-100" />
+            <span className="text-slate-100">Ajuda</span>
+          </Link>
         </div>
         <ul className="">
           {links?.map((link) => {
