@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/disciplina", async (req, res) => {
     var { title, content, obrigatoria, dependencia, token } = req.body;
 
-    if (!title || !content) {
+    if (!title) {
         return res.sendStatus(400);
     }
 
