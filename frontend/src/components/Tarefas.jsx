@@ -4,6 +4,7 @@ import Tarefa from './Tarefa';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTarefas, updateTarefa } from '../features/tarefaSlice';
 import EmptyImg from '../images/emptyBox.png';
+import { FaHourglassEnd, FaCheckSquare, FaBan } from "react-icons/fa";
 
 const Tarefas = ({ filters }) => {
     const { priority, date } = filters;
@@ -105,7 +106,9 @@ const Tarefas = ({ filters }) => {
                 <DragDropContext onDragEnd={onDragEnd}>
                 {/*Coluna 1*/}
                 <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4">Pendente⛔</h1>
+                    <h1 className="text-xl font-bold flex items-center mb-4">
+                        Pendente <FaBan size={20} color={'#FF0000'} />
+                    </h1>
                     <Droppable droppableId="column1" type="list" direction="vertical">
                     {(provided) => (
                         <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">
@@ -127,7 +130,9 @@ const Tarefas = ({ filters }) => {
 
                 {/*Coluna 2*/}
                 <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4">Fazendo⏳</h1>
+                    <h1 className="text-xl font-bold flex items-center mb-4">
+                        Fazendo <FaHourglassEnd size={20} color={'#000080'} />
+                    </h1>
                     <Droppable droppableId="column2" type="list" direction="vertical">
                     {(provided) => (
                         <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">
@@ -149,7 +154,9 @@ const Tarefas = ({ filters }) => {
 
                 {/*Coluna 3*/}
                 <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
-                    <h1 className="text-xl font-bold mb-4">Concluído✅</h1>
+                    <h1 className="text-xl font-bold flex items-center mb-4">
+                        Concluído <FaCheckSquare size={20} color={'#008000'} />
+                    </h1>
                     <Droppable droppableId="column3" type="list" direction="vertical">
                     {(provided) => (
                         <article ref={provided.innerRef} {...provided.droppableProps} className="space-y-2 min-h-[50px]">

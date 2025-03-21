@@ -33,7 +33,13 @@ const CardAgenda = ({info}) => {
             case 'PROVA':
             return <div className='flex items-center gap-2'>Prova</div>; 
             case 'EVENTO':
-            return <div className='flex items-center gap-2'>Evento</div>; 
+            return <div className='flex items-center gap-2'>Evento</div>;
+            case 'REUNIAO':
+            return <div className='flex items-center gap-2'>Reunião</div>;
+            case 'AULA':
+            return <div className='flex items-center gap-2'>Aula</div>;  
+            case 'IMPORTANTE':
+            return <div className='flex items-center gap-2'>Importante</div>;
             default:
             return <div className='flex items-center gap-2'>Evento</div>;
         }
@@ -47,6 +53,12 @@ const CardAgenda = ({info}) => {
             return 'bg-red-500'; 
           case 'EVENTO':
             return 'bg-blue-500'; 
+        case 'REUNIAO':
+            return 'bg-yellow-500';
+        case 'AULA':
+            return 'bg-indigo-500';
+        case 'IMPORTANTE':
+            return 'bg-orange-500';
           default:
             return 'bg-gray-500';
         }

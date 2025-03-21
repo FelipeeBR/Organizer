@@ -149,6 +149,9 @@ const ModalContent = ({ title, onClose, onSubmit, register, loading, error, erro
             <option value="TRABALHO">Trabalho</option>
             <option value="PROVA">Prova</option>
             <option value="EVENTO">Evento</option>
+            <option value="REUNIAO">Reunião</option>
+            <option value="AULA">Aula</option>
+            <option value="IMPORTANTE">Importante</option>
           </select>
         </div>
         <div>

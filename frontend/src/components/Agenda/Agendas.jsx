@@ -24,6 +24,8 @@ const Agendas = () => {
     fetchAgendas();
   }, [dispatch]);
 
+  console.log(agendas)
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedAgendas = Array.isArray(agendas) ? agendas.slice(startIndex, startIndex + ITEMS_PER_PAGE) : [];
 
