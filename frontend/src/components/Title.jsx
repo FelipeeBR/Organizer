@@ -84,14 +84,14 @@ const Title = ({ text }) => {
       <div className="flex gap-2">
         <div>
           <Link to={"/notificacoes"}>
-          <button className="relative w-10 h-10 flex items-center justify-center text-slate-700">
-            <IoMdNotifications size={25} />
-            {notificacao.length > 0 && (
-              <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 text-white font-semibold flex items-center justify-center text-xs leading-none">
-                {notificacao.length}
-              </span>
-            )}
-          </button>
+            <button className="relative w-10 h-10 flex items-center justify-center text-slate-700" title="Notificação">
+              <IoMdNotifications size={25} />
+              {notificacao.length > 0 && (
+                <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-red-500 text-white font-semibold flex items-center justify-center text-xs leading-none">
+                  {notificacao.length}
+                </span>
+              )}
+            </button>
           </Link>
         </div>
         {namePath === "anotacao" &&
@@ -103,7 +103,8 @@ const Title = ({ text }) => {
         }
         {namePath !== "anotacao" &&
           <button onClick={() => openClose(namePath)}
-              className="w-10 h-10 rounded-full border flex items-center justify-center border-white text-white bg-slate-700"
+            className="w-10 h-10 rounded-full border flex items-center justify-center border-white text-white bg-slate-700"
+            title="Adicionar"
           >
               <FaPlus />
           </button>

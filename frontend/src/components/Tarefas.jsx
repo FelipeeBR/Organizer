@@ -105,7 +105,7 @@ const Tarefas = ({ filters }) => {
             <div className="flex flex-wrap sm:flex-nowrap justify-center gap-5 w-full max-w-7xl">
                 <DragDropContext onDragEnd={onDragEnd}>
                 {/*Coluna 1*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[600px] shadow-lg">
                     <h1 className="text-xl font-bold flex items-center mb-4">
                         Pendente <FaBan size={20} color={'#FF0000'} />
                     </h1>
@@ -129,7 +129,7 @@ const Tarefas = ({ filters }) => {
                 </section>
 
                 {/*Coluna 2*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[600px] shadow-lg">
                     <h1 className="text-xl font-bold flex items-center mb-4">
                         Fazendo <FaHourglassEnd size={20} color={'#000080'} />
                     </h1>
@@ -153,7 +153,7 @@ const Tarefas = ({ filters }) => {
                 </section>
 
                 {/*Coluna 3*/}
-                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[300px] shadow-lg">
+                <section className="bg-gray-50 p-5 rounded-lg w-full sm:w-1/2 md:w-1/3 flex-1 min-h-[600px] shadow-lg">
                     <h1 className="text-xl font-bold flex items-center mb-4">
                         Concluído <FaCheckSquare size={20} color={'#008000'} />
                     </h1>

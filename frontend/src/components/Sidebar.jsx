@@ -63,12 +63,12 @@ const Sidebar = () => {
             <h4 className="text-slate-100 text-xl font-medium">{name}</h4>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center">
-          <Link to="/ajuda">
-            <FaQuestion className="text-2xl text-slate-100" />
-            <span className="text-slate-100">Ajuda</span>
-          </Link>
-        </div>
+        <Link to="/ajuda">
+          <div className="flex flex-col items-center justify-center" title="Ajuda sobre o sistema">
+              <FaQuestion className="text-2xl text-slate-100" />
+              <span className="text-slate-100">Ajuda</span>
+          </div>
+        </Link>
         <ul className="">
           {links?.map((link) => {
             return (
