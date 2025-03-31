@@ -36,7 +36,7 @@ const Calendario = () => {
           title: agenda.description,
           start: agenda.date,
           priority: agenda.tipo,
-          extendedProps: { type: "agenda", details: agenda.details },
+          extendedProps: { type: "agenda", details: agenda.description },
         }))
       : []),
 
@@ -45,7 +45,7 @@ const Calendario = () => {
           title: tarefa.title,
           start: tarefa.date,
           priority: tarefa.priority,
-          extendedProps: { type: "tarefa", details: tarefa.details },
+          extendedProps: { type: "tarefa", details: tarefa.description },
         }))
       : []),
   ];
@@ -56,10 +56,11 @@ const Calendario = () => {
       date: clickInfo.event.start.toLocaleDateString("pt-BR"),
       details: clickInfo.event.extendedProps.details || "Sem detalhes",
       priority: clickInfo.event.extendedProps.priority,
+      type: clickInfo.event.extendedProps.type,
     });
     setModalOpen(true);
   };
-
+  console.log(eventos)
   return (
     <div className="bg-white p-4 rounded-lg mt-4">
       <FullCalendar
@@ -87,9 +88,18 @@ const Calendario = () => {
             <p className="text-sm text-gray-600">
               <strong>Data:</strong> {eventoSelecionado.date}
             </p>
-            <p className="text-sm text-gray-600">
-              {eventoSelecionado.priority}
-            </p>
+          
+            {eventoSelecionado?.type === "tarefa" && (
+              <p className="text-sm text-gray-600">
+                <strong>Prioridade:</strong> {eventoSelecionado.priority}
+              </p>
+            )}
+
+            {eventoSelecionado?.type === "tarefa" && (
+              <p className="text-sm text-gray-600">
+                <strong>Detalhes:</strong> {eventoSelecionado?.details}
+              </p>
+            )}
           </div>
         </div>
       )}
