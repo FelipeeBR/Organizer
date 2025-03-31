@@ -5,13 +5,13 @@ const { createAnotacao, updateAnotacao, getAnotacoes, getAnotacao, deleteAnotaca
 const router = express.Router();
 
 router.post("/anotacao", auth, async (req, res) => {
-    const { title, description, token } = req.body;
+    const { title, description, disciplinaId, token } = req.body;
     if(!title || !description) {
         return res.status(400).json({ message: "Titulo ou descrição estão em branco." });
     }
 
     try {
-        const post = await createAnotacao(title, description, token);
+        const post = await createAnotacao(title, description, disciplinaId, token);
         res.status(201).json(post);
     } catch (error) {
         console.error(error);
@@ -46,10 +46,10 @@ router.get("/anotacao/:id", auth, async (req, res) => {
 
 router.put("/anotacao/:id", auth, async (req, res) => {
     const { id } = req.params; 
-    const { title, description } = req.body;
+    const { title, description, disciplinaId } = req.body;
     
     try {
-        const post = await updateAnotacao(id, title, description); 
+        const post = await updateAnotacao(id, title, description, disciplinaId); 
         res.status(200).json(post); 
     } catch (error) {
         console.error(error);

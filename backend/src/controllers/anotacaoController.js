@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
 
-async function createAnotacao(title, description, token) {
+async function createAnotacao(title, description, disciplinaId, token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_TOKEN);
         const userId = decoded.id;
@@ -11,6 +11,7 @@ async function createAnotacao(title, description, token) {
             data: {
                 title: title,
                 description: description,
+                disciplinaId: parseInt(disciplinaId),
                 userId: userId
             }
         });
@@ -20,7 +21,7 @@ async function createAnotacao(title, description, token) {
     }
 };
 
-async function updateAnotacao(id, title, description) {
+async function updateAnotacao(id, title, description, disciplinaId) {
     try {
         const data = await prisma.anotacao.update({
             where: {
@@ -28,7 +29,8 @@ async function updateAnotacao(id, title, description) {
             },
             data: {
                 title: title,
-                description: description
+                description: description,
+                disciplinaId: parseInt(disciplinaId)
             }
         });
         return data;

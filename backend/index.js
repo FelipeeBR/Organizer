@@ -20,8 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log('Requisição de origem:', origin);
-
     const allowedOrigins = [process.env.URL_ORIGIN, 'http://localhost:3000'];
 
     if (!origin || allowedOrigins.includes(origin)) {

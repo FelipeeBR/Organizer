@@ -106,7 +106,6 @@ const ModalTarefa = () => {
     fetchDisciplinas();
   }, [dispatch]);
 
-
   return (
     <div
       className={`bg-[rgba(0,0,0,0.5)] min-h-screen w-full flex items-center justify-center fixed top-0 left-0 ${
