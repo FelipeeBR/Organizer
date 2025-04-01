@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from '../../components/Title';
+import Title2 from '../../components/Title2';
 import axios from 'axios';
 import { FaChartLine, FaMarker, FaCheckSquare, FaHandPointRight, FaExclamationTriangle } from "react-icons/fa";
 import { format } from 'date-fns';
@@ -36,7 +36,7 @@ const Desempenho = () => {
 
     return (
         <div className="h-full overflow-y-auto p-6 bg-gray-100">
-            <Title text="Desempenho" />
+            <Title2 text="Desempenho" />
 
             <div className="flex flex-col items-center text-center mb-6">
                 <h3 className="text-3xl font-bold text-gray-900">Veja como está seu desempenho</h3>
