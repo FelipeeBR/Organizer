@@ -6,8 +6,12 @@ import { toast } from "react-toastify";
 import { deleteAnotacao } from '../../features/anotacaoSlice';
 
 const CardAnotacao = ({info}) => {
-    const { id, title } = info;
+    const { id, title, createdAt } = info;
     const dispatch = useDispatch();
+
+    const datePart = createdAt.split('T')[0];
+    const [year, month, day] = datePart.split('-');
+    const formattedDate = `${day}/${month}/${year}`;
 
     const handleDeleteAnotacao = async (id) => {
         const token = JSON.parse(localStorage.getItem('user')).token;
@@ -27,6 +31,9 @@ const CardAnotacao = ({info}) => {
                 </div>
                 <div className="flex flex-col flex-grow">
                     <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+                </div>
+                <div className="flex flex-col flex-grow">
+                    <h3 className="text-lg font-semibold text-gray-800">{formattedDate}</h3>
                 </div>
             </Link>
             <div className="flex flex-col flex-grow">
