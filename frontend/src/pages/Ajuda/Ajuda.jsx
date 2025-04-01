@@ -61,7 +61,7 @@ const Ajuda = () => {
                 Para ver o seu desempenho, basta clicar no botão 
                 <div className="flex justify-center mb-6">
                     <button
-                        className="flex bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300"
+                        className="flex bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 cursor-default"
                     >
                         <FaChartLine className="mr-2" color='#fff' size={20}/>
                         Mostrar meu desempenho
@@ -86,6 +86,9 @@ const Ajuda = () => {
                     <FaPlus />
                 </span> 
                 e preencher os itens.
+            </p>
+            <p className='text-lg text-center sm:text-base'>
+                Al clicar em cima de algo marcado no calendario, é possivel visualizar com mais detalhes a tarefa ou agenda do dia.
             </p>
         </div>
     </div>

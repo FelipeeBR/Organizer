@@ -13,6 +13,7 @@ const CardNotificacao = ({info}) => {
         const res = await dispatch(updateNotificacao({ id, token })); 
         if(res.meta.requestStatus === 'fulfilled') {
             toast.success('Marcado como lido com sucesso');
+            window.location.reload();
         } else {
             toast.error(res.payload || 'Erro ao marcar como lido');
         }

@@ -112,7 +112,7 @@ export default Calendario;
 function renderEventContent(eventInfo) {
   return (
     <div
-      className={`rounded text-white px-2 py-1 truncate max-w-[120px] overflow-hidden text-ellipsis ${
+      className={`rounded text-white px-2 py-1 truncate max-w-[120px] overflow-hidden text-ellipsis cursor-pointer ${
         eventInfo.event.extendedProps.type === "agenda"
           ? "bg-blue-600"
           : "bg-green-600"
