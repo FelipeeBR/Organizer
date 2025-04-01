@@ -51,16 +51,19 @@ const Calendario = () => {
   ];
 
   const handleEventClick = (clickInfo) => {
+    const eventDate = new Date(clickInfo.event.start);
+    eventDate.setDate(eventDate.getDate() + 1);
+    
     setEventoSelecionado({
       title: clickInfo.event.title,
-      date: clickInfo.event.start.toLocaleDateString("pt-BR"),
+      date: eventDate.toLocaleDateString("pt-BR"),
       details: clickInfo.event.extendedProps.details || "Sem detalhes",
       priority: clickInfo.event.extendedProps.priority,
       type: clickInfo.event.extendedProps.type,
     });
     setModalOpen(true);
   };
-  console.log(eventos)
+
   return (
     <div className="bg-white p-4 rounded-lg mt-4">
       <FullCalendar
