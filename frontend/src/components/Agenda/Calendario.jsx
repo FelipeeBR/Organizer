@@ -51,8 +51,12 @@ const Calendario = () => {
   ];
 
   const handleEventClick = (clickInfo) => {
-    const eventDate = new Date(clickInfo.event.start);
-    eventDate.setDate(eventDate.getDate() + 1);
+    const originalDate = new Date(clickInfo.event.start);
+    const isTarefa = clickInfo.event.extendedProps.type === "tarefa";
+    const eventDate = new Date(originalDate);
+    if(isTarefa) {
+      eventDate.setDate(eventDate.getDate() + 1);
+    }
     
     setEventoSelecionado({
       title: clickInfo.event.title,
