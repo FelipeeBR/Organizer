@@ -1,4 +1,28 @@
-## Aplicação para Organização universitária que utiliza metodologia ágil kanban
+# Aplicação para Organização universitária que utiliza metodologia ágil Kanban
+
+## Funcionalidades
+- Agenda: criar agendas personalizadas para Trabalho, Prova, Evento, Reunião, Aula, Importante
+- Disciplina: criar disciplinas
+- Tarefas: criar tarefas para disciplinas
+- Calendario: mostra todas as tarefas e agendas
+- Anotações: criar anotações dobre alguma atividade ou disciplina
+- Notificações: sobre tarefas e agendas marcadas
+
+## Tecnologias Backend
+- Prisma ORM
+- Express.js
+- PostgreSQL
+
+## Tecnologias Frontend
+- React
+- React Redux
+- React Hook Form
+- Reduxjs/toolkit
+- React Context
+- Full Calendar
+- Hello-pangea/dnd
+- React-simple-wysiwyg
+- React Icons
 
 Versão utilizando React Native: https://github.com/FelipeeBR/OrganizerApp
 
